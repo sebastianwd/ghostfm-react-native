@@ -7,6 +7,7 @@ import {Provider as PaperProvider, DarkTheme} from 'react-native-paper';
 import App from './App';
 import {name as appName} from './app.json';
 import React from 'react';
+import BottomNav from './components/ui/BottomNav';
 
 const theme = {
   ...DarkTheme,
@@ -22,6 +23,7 @@ export default function Main() {
   return (
     <PaperProvider theme={theme}>
       <App />
+      <BottomNav></BottomNav>
     </PaperProvider>
   );
 }
