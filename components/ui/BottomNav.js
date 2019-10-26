@@ -1,31 +1,39 @@
 import {BottomNavigation, Text} from 'react-native-paper';
-import React from 'react';
+import React, {useState} from 'react';
+import HomeScreen from '../screens/HomeScreen';
+import ArtistScreen from '../screens/ArtistScreen';
+import SearchScreen from '../screens/SearchScreen';
+import LibraryScreen from '../screens/LibraryScreen';
 
-export default class MyComponent extends React.Component {
-  state = {
+const BottomNav = () => {
+  const [routes, setRoutes] = useState({
     index: 0,
     routes: [
-      {key: 'music', title: 'Music', icon: 'queue-music'},
-      {key: 'albums', title: 'Albums', icon: 'album'},
-      {key: 'recents', title: 'Recents', icon: 'history'},
+      {key: 'home', title: 'Home', icon: 'home'},
+      {key: 'search', title: 'Search', icon: 'magnify'},
+      {key: 'library', title: 'Library', icon: 'library-music'},
     ],
+  });
+  const handleIndexChange = index => {
+    setRoutes(routes => ({
+      ...routes,
+      index: index,
+    }));
   };
 
-  _handleIndexChange = index => this.setState({index});
-
-  _renderScene = BottomNavigation.SceneMap({
-    music: MusicRoute,
-    albums: AlbumsRoute,
-    recents: RecentsRoute,
+  const renderScene = BottomNavigation.SceneMap({
+    home: HomeScreen,
+    search: SearchScreen,
+    library: LibraryScreen,
   });
 
-  render() {
-    return (
-      <BottomNavigation
-        navigationState={this.state}
-        onIndexChange={this._handleIndexChange}
-        renderScene={this._renderScene}
-      />
-    );
-  }
-}
+  return (
+    <BottomNavigation
+      navigationState={routes}
+      onIndexChange={handleIndexChange}
+      renderScene={renderScene}
+    />
+  );
+};
+
+export default BottomNav;
