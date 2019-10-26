@@ -11,11 +11,12 @@ import HomeScreen from './components/screens/HomeScreen';
 import LibraryScreen from './components/screens/LibraryScreen';
 import SearchScreen from './components/screens/SearchScreen';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import TrackPlayer from 'react-native-track-player';
 
 /* home: HomeScreen,
     search: SearchScreen,
     library: LibraryScreen,*/
-const BottomNavStack = createMaterialBottomTabNavigator(
+/*const BottomNavStack = createMaterialBottomTabNavigator(
   {
     Home: {
       screen: HomeScreen,
@@ -83,9 +84,86 @@ const MainStack = createStackNavigator(
       },
     },
   },
-);
+);*/
 
-const AppContainer = createAppContainer(MainStack);
+const SearchStack = createStackNavigator(
+  {
+    Search: {
+      screen: SearchScreen,
+      navigationOptions: {
+        header: null, //this will hide the header
+      },
+    },
+    Artist: {
+      screen: ArtistScreen,
+    },
+  },
+  {
+    initialRouteName: 'Search',
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: '#3f51b5',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    },
+  },
+);
+const BottomNavStack = createMaterialBottomTabNavigator(
+  {
+    Home: {
+      screen: HomeScreen,
+      navigationOptions: {
+        tabBarIcon: ({focused}) => (
+          <MaterialIcon
+            name={'home'}
+            size={24}
+            color={`${focused ? '#fff' : '#d1d1d1b7'}`}
+          />
+        ),
+      },
+    },
+    Search: {
+      screen: SearchStack,
+      navigationOptions: {
+        tabBarIcon: ({focused}) => (
+          <MaterialIcon
+            name={'magnify'}
+            size={24}
+            color={`${focused ? '#fff' : '#d1d1d1b7'}`}
+          />
+        ),
+      },
+    },
+    Library: {
+      screen: LibraryScreen,
+      navigationOptions: {
+        tabBarIcon: ({focused}) => (
+          <MaterialIcon
+            name={'library-music'}
+            size={24}
+            color={`${focused ? '#fff' : '#d1d1d1b7'}`}
+          />
+        ),
+      },
+    },
+  },
+  {
+    initialRouteName: 'Home',
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: '#3f51b5',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    },
+  },
+);
+const AppContainer = createAppContainer(BottomNavStack);
 
 class App extends React.Component {
   render() {

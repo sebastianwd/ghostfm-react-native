@@ -4,18 +4,29 @@ import {ScrollView, FlatList} from 'react-native-gesture-handler';
 import {StyleSheet} from 'react-native';
 import TopBar from '../ui/TopBar';
 import NavigationService from '../misc/NavigationService';
+import {withTheme} from 'react-native-paper';
 
 const SearchScreen = props => {
   const [searchResults, setSearchResults] = useState();
+  const {colors} = props.theme;
 
   const handlePress = artistName => {
     NavigationService.navigate('Artist', {artistName});
   };
 
+  const styles = StyleSheet.create({
+    container: {
+      backgroundColor: colors.background,
+    },
+    item: {
+      paddingVertical: 0,
+    },
+  });
+
   return (
     <React.Fragment>
       <TopBar setSearchResults={setSearchResults}></TopBar>
-      <ScrollView>
+      <ScrollView style={styles.container}>
         <List.Section>
           <List.Subheader>Resultados</List.Subheader>
           <FlatList
@@ -39,10 +50,4 @@ const SearchScreen = props => {
   );
 };
 
-const styles = StyleSheet.create({
-  item: {
-    paddingVertical: 0,
-  },
-});
-
-export default SearchScreen;
+export default withTheme(SearchScreen);

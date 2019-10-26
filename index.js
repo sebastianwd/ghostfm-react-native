@@ -7,6 +7,8 @@ import {Provider as PaperProvider, DarkTheme} from 'react-native-paper';
 import App from './App';
 import {name as appName} from './app.json';
 import React from 'react';
+import TrackPlayer from 'react-native-track-player';
+import Player from './components/screens/components/Player';
 
 const theme = {
   ...DarkTheme,
@@ -22,8 +24,10 @@ export default function Main() {
   return (
     <PaperProvider theme={theme}>
       <App />
+      <Player></Player>
     </PaperProvider>
   );
 }
 
 AppRegistry.registerComponent(appName, () => Main);
+TrackPlayer.registerPlaybackService(() => require('./service'));
