@@ -8,7 +8,9 @@ import App from './App';
 import {name as appName} from './app.json';
 import React from 'react';
 import TrackPlayer from 'react-native-track-player';
-import Player from './components/screens/components/Player';
+
+import {StoreProvider} from 'easy-peasy';
+import store from './components/misc/store/store';
 
 const theme = {
   ...DarkTheme,
@@ -22,10 +24,11 @@ const theme = {
 
 export default function Main() {
   return (
-    <PaperProvider theme={theme}>
-      <App />
-      <Player></Player>
-    </PaperProvider>
+    <StoreProvider store={store}>
+      <PaperProvider theme={theme}>
+        <App />
+      </PaperProvider>
+    </StoreProvider>
   );
 }
 

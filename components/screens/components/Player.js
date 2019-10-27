@@ -6,11 +6,11 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
-  Text,
   ViewPropTypes,
 } from 'react-native';
+import {Text} from 'react-native-paper';
 
-const Player = () => {
+const Player = props => {
   useEffect(() => {
     setupPlayer();
   }, []);
@@ -33,7 +33,7 @@ const Player = () => {
     });
   };
   return (
-    <View>
+    <View style={props.style}>
       <Text>player</Text>
     </View>
   );

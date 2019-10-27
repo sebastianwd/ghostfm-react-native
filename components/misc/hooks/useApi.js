@@ -2,6 +2,7 @@ import {useState} from 'react';
 import {create} from 'apisauce';
 
 // https://ghostfm.herokuapp.com/
+const YOUTUBEDL_URL = 'https://youtubedl-api.herokuapp.com/api/';
 const BASE_URL = 'https://ghostfm.herokuapp.com/';
 
 const api = create({
@@ -9,9 +10,29 @@ const api = create({
   headers: {Accept: 'application/json'},
 });
 
+const ytapi = create({
+  baseURL: YOUTUBEDL_URL,
+  headers: {Accept: 'application/json'},
+});
+
 const useApi = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+
+  const fetchYoutube = async (endpoint, params) => {
+    setIsError(false);
+    setIsLoading(true);
+    try {
+      console.log('useApi', 'fetching: ' + YOUTUBEDL_URL + endpoint);
+      const result = await ytapi.get(endpoint, params);
+      setIsLoading(false);
+      return result.data;
+    } catch (error) {
+      console.error('useApi', error);
+      setIsError(true);
+    }
+    setIsLoading(false);
+  };
 
   const fetchData = async (endpoint, params) => {
     setIsError(false);
@@ -102,6 +123,13 @@ const useApi = () => {
     return data;
   }
 
+  async function getMP3(query) {
+    let data = await fetchYoutube('audio', {
+      query: query,
+    });
+    return data;
+  }
+
   return {
     isLoading,
     isError,
@@ -113,6 +141,7 @@ const useApi = () => {
     getSimilarByArtistName,
     getAlbumsByArtistName,
     getAlbumInfo,
+    getMP3,
   };
 };
 

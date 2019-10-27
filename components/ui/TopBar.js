@@ -19,7 +19,7 @@ const TopBar = ({setSearchResults}) => {
           placeholder="Search"
           style={styles.input}
           onChangeText={handleChangeText}
-          placeholder={'Busca artistas'}
+          placeholder={'Search artists...'}
         />
       </View>
 

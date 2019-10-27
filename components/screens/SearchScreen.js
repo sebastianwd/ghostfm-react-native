@@ -28,7 +28,7 @@ const SearchScreen = props => {
       <TopBar setSearchResults={setSearchResults}></TopBar>
       <ScrollView style={styles.container}>
         <List.Section>
-          <List.Subheader>Resultados</List.Subheader>
+          <List.Subheader>Results</List.Subheader>
           <FlatList
             data={searchResults}
             renderItem={({item}) => (

@@ -1,40 +1,27 @@
-import {BottomNavigation, Text} from 'react-native-paper';
 import React, {useState} from 'react';
-import HomeScreen from '../screens/HomeScreen';
-import ArtistScreen from '../screens/ArtistScreen';
-import SearchScreen from '../screens/SearchScreen';
-import LibraryScreen from '../screens/LibraryScreen';
-import {createNavigator} from 'react-navigation';
+import Player from '../screens/components/Player';
+import {BottomTabBar} from 'react-navigation-tabs';
+import {withTheme} from 'react-native-paper';
+import {StyleSheet} from 'react-native';
 
-const BottomNav = () => {
-  const [routes, setRoutes] = useState({
-    index: 0,
-    routes: [
-      {key: 'home', title: 'Home', icon: 'home'},
-      {key: 'search', title: 'Search', icon: 'magnify'},
-      {key: 'library', title: 'Library', icon: 'library-music'},
-    ],
-  });
-  const handleIndexChange = index => {
-    setRoutes(routes => ({
-      ...routes,
-      index: index,
-    }));
-  };
+const BottomNav = ({theme, ...otherProps}) => {
+  const {colors} = theme;
 
-  const renderScene = BottomNavigation.SceneMap({
-    home: HomeScreen,
-    search: SearchScreen,
-    library: LibraryScreen,
+  const styles = StyleSheet.create({
+    player: {
+      backgroundColor: colors.background,
+    },
+    bottomNav: {
+      backgroundColor: colors.background,
+    },
   });
 
   return (
-    <BottomNavigation
-      navigationState={routes}
-      onIndexChange={handleIndexChange}
-      renderScene={renderScene}
-    />
+    <React.Fragment>
+      <Player style={styles.player}></Player>
+      <BottomTabBar {...otherProps} style={styles.bottomNav} />
+    </React.Fragment>
   );
 };
 
-export default BottomNav;
+export default withTheme(BottomNav);
