@@ -3,33 +3,31 @@ import {FlatList} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-navigation';
 
 import TrackItem from './TrackItem';
+import {FALLBACK_MP3} from '../../misc/Utils';
 import useMusicPlayer from '../../misc/hooks/useMusicPlayer';
 
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
 const TrackList = ({trackList}) => {
-  trackList.forEach((track, i) => {
-    track.id = getRandomInt(1, 99999).toString();
+  /*trackList.forEach((track, i) => {
     track.number = (i + 1).toString();
+  });*/
+
+  let playlist = trackList.map(({artist, name}, index) => {
+    return {
+      id: (index + 11).toString(),
+      artist: artist.strArtist,
+      title: name,
+      url: FALLBACK_MP3,
+    };
   });
-
-  const {setQueue} = useMusicPlayer();
-
-  const onPlay = () => {
-    setQueue(trackList);
-  };
 
   return (
     <React.Fragment>
       <SafeAreaView>
         {trackList && (
           <FlatList
-            data={trackList}
+            data={playlist}
             renderItem={({item}) => (
-              <TrackItem item={item} onPlay={onPlay}></TrackItem>
+              <TrackItem item={item} trackList={playlist}></TrackItem>
             )}
             keyExtractor={item => item.id}
           />

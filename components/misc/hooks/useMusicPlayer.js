@@ -10,12 +10,6 @@ import TrackPlayer from 'react-native-track-player';
 import React, {useState} from 'react';
 import useApi from './useApi';
 
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
 const useMusicPlayer = () => {
   const {getMP3, getTrackInfo} = useApi();
 
@@ -30,6 +24,9 @@ const useMusicPlayer = () => {
   const updateArtwork = useStoreActions(
     actions => actions.player.updateArtwork,
   );
+  const updateTrackInfo = useStoreActions(
+    actions => actions.player.updateTrackInfo,
+  );
   const playTrack = useStoreActions(actions => actions.player.playTrack);
 
   const handlePlayPause = async () => {
@@ -40,58 +37,17 @@ const useMusicPlayer = () => {
     isPlaying ? TrackPlayer.pause() : TrackPlayer.play();
   };
 
-  const updateMetadata = async (id, trackData) => {
-    const trackInfo = await getTrackInfo(trackData.artist, trackData.title);
-
-    if (trackInfo) {
-      updateMetadataForTrack(id, {...trackData, artwork: trackInfo.url});
-      updateArtwork(trackInfo.url);
-    }
-  };
-
   const setQueue = useStoreActions(actions => actions.player.setQueue);
 
-  const playPrev = () => {
-    let playlistState = store.getState().playlist;
-    let queue = playlistState.queue;
-    if (queue && queue.length > 0) {
-      const prevTrack = playlistState.prevTrack.track;
-      const prevArtist = playlistState.prevTrack.artist;
-
-      getMP3(`${prevArtist} ${prevTrack}`).then(mp3Url => {
-        const trackData = {
-          id: getRandomInt(1, 99999),
-          url: mp3Url[0],
-          title: trackName,
-          artist: artistName,
-        };
-
-        playTrack(trackData);
-        updateMetadata(item.id, trackData);
-      });
-    }
-  };
-
-  const playNext = () => {
-    let playlistState = store.getState().playlist;
-    let queue = playlistState.queue;
-    if (queue && queue.length > 0) {
-      const nextTrack = playlistState.nextTrack.track;
-      const nextArtist = playlistState.nextTrack.artist;
-      console.log('nextArtist', nextArtist);
-      console.log('nextTrack', nextTrack);
-
-      getMP3(`${nextArtist} ${nextTrack}`).then(mp3Url => {
-        const trackData = {
-          id: getRandomInt(1, 99999),
-          url: mp3Url[0],
-          title: trackName,
-          artist: artistName,
-        };
-
-        playTrack(trackData);
-        updateMetadata(item.id, trackData);
-      });
+  const updateMetadata = async ({id, ...trackData}) => {
+    const trackInfo = await getTrackInfo(trackData.artist, trackData.title);
+    /*const mp3Url = await getMP3(`${trackData.artist} ${trackData.title}`);
+    trackData.url = mp3Url[0];*/
+    /*  console.log('trackInfo', trackInfo);
+    console.log('trackData', trackData);*/
+    if (trackInfo) {
+      updateMetadataForTrack(id, {...trackData, artwork: trackInfo.url});
+      updateTrackInfo({id, ...trackData, artwork: trackInfo.url});
     }
   };
 
@@ -103,8 +59,6 @@ const useMusicPlayer = () => {
     playTrack,
     isPlaying,
     setQueue,
-    playPrev,
-    playNext,
   };
 };
 
