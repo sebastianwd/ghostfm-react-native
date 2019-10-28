@@ -5,6 +5,7 @@ import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import NavigationService from './components/misc/NavigationService';
 import HomeScreen from './components/screens/HomeScreen';
+import PlayerScreen from './components/screens/components/Player/PlayerScreen';
 import LibraryScreen from './components/screens/LibraryScreen';
 import SearchScreen from './components/screens/SearchScreen';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -90,7 +91,27 @@ const BottomNavStack = createBottomTabNavigator(
     },
   },
 );
-const AppContainer = createAppContainer(BottomNavStack);
+
+const MainStack = createStackNavigator(
+  {
+    Main: {
+      screen: BottomNavStack,
+      navigationOptions: {
+        header: null, //this will hide the header
+      },
+    },
+    Player: {
+      screen: PlayerScreen,
+      navigationOptions: {
+        header: null, //this will hide the header
+      },
+    },
+  },
+  {
+    initialRouteName: 'Main',
+  },
+);
+const AppContainer = createAppContainer(MainStack);
 
 class App extends React.Component {
   render() {

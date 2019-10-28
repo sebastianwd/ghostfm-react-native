@@ -19,7 +19,7 @@ const useApi = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
-  const fetchYoutube = async (endpoint, params) => {
+  const fetchGoogle = async (endpoint, params) => {
     setIsError(false);
     setIsLoading(true);
     try {
@@ -124,13 +124,29 @@ const useApi = () => {
   }
 
   async function getMP3(query) {
-    let data = await fetchYoutube('audio', {
+    let data = await fetchGoogle('audio', {
       query: query,
     });
     return data;
   }
 
+  async function getImage(query) {
+    let data = await fetchGoogle('image', {
+      query: query,
+    });
+    return data;
+  }
+  async function getTrackInfo(artistName, trackName) {
+    let data = await fetchData('track', {
+      artist: artistName,
+      track: trackName,
+      withImage: 'true',
+    });
+    return data;
+  }
+
   return {
+    getImage,
     isLoading,
     isError,
     getArtistByName,
@@ -142,6 +158,7 @@ const useApi = () => {
     getAlbumsByArtistName,
     getAlbumInfo,
     getMP3,
+    getTrackInfo,
   };
 };
 

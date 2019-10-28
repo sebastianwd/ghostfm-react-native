@@ -10,18 +10,20 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-community/slider": "^2.0.2",
     "apisauce": "^1.1.1",
     "easy-peasy": "^3.1.0",
     "react": "16.9.0",
     "react-native": "0.61.2",
     "react-native-gesture-handler": "^1.4.1",
+    "react-native-linear-gradient": "^2.5.6",
     "react-native-paper": "^3.0.0",
     "react-native-reanimated": "^1.3.0",
     "react-native-screens": "^2.0.0-alpha.6",
     "react-native-search-header": "^0.3.5",
     "react-native-swift": "^1.2.2",
     "react-native-tab-view": "^2.10.0",
-    "react-native-track-player": "^1.1.8",
+    "react-native-track-player": "react-native-kit/react-native-track-player#dev",
     "react-native-vector-icons": "^6.6.0",
     "react-navigation": "^4.0.10",
     "react-navigation-material-bottom-tabs": "^2.1.3",
@@ -36,7 +38,8 @@
     "eslint": "^6.5.1",
     "jest": "^24.9.0",
     "metro-react-native-babel-preset": "^0.56.3",
-    "react-test-renderer": "16.9.0"
+    "react-test-renderer": "16.9.0",
+    "remote-redux-devtools": "^0.5.16"
   },
   "jest": {
     "preset": "react-native"

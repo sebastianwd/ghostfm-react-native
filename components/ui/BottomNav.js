@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
-import Player from '../screens/components/Player';
+import MiniPlayer from '../screens/components/MiniPlayer/Player';
 import {BottomTabBar} from 'react-navigation-tabs';
 import {withTheme} from 'react-native-paper';
 import {StyleSheet} from 'react-native';
+import NavigationService from '../misc/NavigationService';
 
 const BottomNav = ({theme, ...otherProps}) => {
   const {colors} = theme;
@@ -16,9 +17,13 @@ const BottomNav = ({theme, ...otherProps}) => {
     },
   });
 
+  const handlePress = () => {
+    NavigationService.navigate('Player');
+    console.log('pressed');
+  };
   return (
     <React.Fragment>
-      <Player style={styles.player}></Player>
+      <MiniPlayer style={styles.player} onPress={handlePress}></MiniPlayer>
       <BottomTabBar {...otherProps} style={styles.bottomNav} />
     </React.Fragment>
   );
