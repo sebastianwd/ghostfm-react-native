@@ -180,6 +180,8 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-snackbar')
+    implementation project(':react-native-get-music-files')
     implementation project(':react-native-linear-gradient')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
