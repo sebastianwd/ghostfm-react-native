@@ -5464,6 +5464,10 @@ react-native-gesture-handler@^1.4.1:
     invariant "^2.2.4"
     prop-types "^15.7.2"
 
+"react-native-get-music-files@https://github.com/cinder92/react-native-get-music-files.git":
+  version "2.1.0"
+  resolved "https://github.com/cinder92/react-native-get-music-files.git#21de27be9ebc8256c2d92fa81b3e5380b528df83"
+
 react-native-linear-gradient@^2.5.6:
   version "2.5.6"
   resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.5.6.tgz#96215cbc5ec7a01247a20890888aa75b834d44a0"
@@ -5477,6 +5481,11 @@ react-native-paper@^3.0.0:
     "@callstack/react-theme-provider" "^3.0.5"
     color "^3.1.2"
     react-native-safe-area-view "^0.12.0"
+
+react-native-permissions@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-2.0.3.tgz#b6da83e5e313e41ba5f70ff2c4567291766b0140"
+  integrity sha512-8pd+UhyphAiFGzBil5d5pDxRf/rH+20SzDNu9cFnCtoD2MbYTVH7GjXsxaZ2lPsmwrqYYbF8FBfwmncKf/G1+Q==
 
 react-native-reanimated@^1.3.0:
   version "1.3.0"
@@ -5518,6 +5527,11 @@ react-native-search-header@^0.3.5:
   dependencies:
     react-native-animatable "^1.3.2"
     semver "^6.3.0"
+
+react-native-snackbar@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-snackbar/-/react-native-snackbar-2.0.3.tgz#b40843894aafa213f8a4c46fded5205befee4f19"
+  integrity sha512-gpDTYDhKkgXir2vjbbdd3Lz0QJZvl5vbeUjnIAWS/pE1k9Eshdby3cLxnJJ8gLxUHT96smuKIDKvgNV1spnNZA==
 
 react-native-swift@^1.2.2:
   version "1.2.2"
@@ -6685,9 +6699,9 @@ tr46@^1.0.1:
     punycode "^2.1.0"
 
 ts-toolbelt@^4.7.23:
-  version "4.9.1"
-  resolved "https://registry.yarnpkg.com/ts-toolbelt/-/ts-toolbelt-4.9.1.tgz#a56e1a3af7dbf85fb2a3950671b6b7460f1dfe9f"
-  integrity sha512-8ZYA9vHq6u7tAT5sXg7SwBU2PoWq1U2zBUdyCHqlZQ8/o2ioNJgb5uQyOvW7JqVuaZi5PyxuhqQ860lXOoygKw==
+  version "4.9.9"
+  resolved "https://registry.yarnpkg.com/ts-toolbelt/-/ts-toolbelt-4.9.9.tgz#1a5870096430a15f5a694d53c40705473cd7b131"
+  integrity sha512-syHEGzoVahm9PoUgeN5Q3d/Dcn3nHGko26Zhxq6T9WfOyADgrg3OXP/Fp6GOpfuZt5Ln9IJW+zn+rQ9C8FqeIg==
 
 tslib@^1.8.1, tslib@^1.9.0:
   version "1.10.0"

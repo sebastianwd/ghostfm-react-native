@@ -37,6 +37,11 @@ target 'GhostFM' do
 
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
 
+
+  pod 'RNReactNativeGetMusicFiles', :path => '../node_modules/react-native-get-music-files'
+
+  pod 'RNSnackbar', :path => '../node_modules/react-native-snackbar'
+
   target 'GhostFMTests' do
     inherit! :search_paths
     # Pods for testing

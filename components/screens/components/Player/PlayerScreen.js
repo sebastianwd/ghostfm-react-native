@@ -15,6 +15,8 @@ import useMusicPlayer from '../../../misc/hooks/useMusicPlayer';
 import {State} from 'react-native-track-player';
 import {useTrackPlayerProgress} from 'react-native-track-player';
 import TrackSlider from './TrackSlider';
+import TrackPlayer from 'react-native-track-player';
+import NavigationService from '../../../misc/NavigationService';
 
 const fallbackArtwork = 'https://i.imgur.com/dWF1FAo.png';
 
@@ -67,9 +69,16 @@ const styles = StyleSheet.create({
   },
 });
 
-const PlayerScreen = ({onPress}) => {
+const PlayerScreen = () => {
   const {playerState, isPlaying, handlePlayPause} = useMusicPlayer();
 
+  const playPrev = () => {
+    TrackPlayer.skipToPrevious();
+  };
+
+  const playNext = () => {
+    TrackPlayer.skipToNext();
+  };
   return (
     <SafeAreaView style={styles.root}>
       <LinearGradient
@@ -78,13 +87,20 @@ const PlayerScreen = ({onPress}) => {
       />
       <View style={styles.container}>
         <View style={styles.header}>
-          <RectButton style={styles.button} {...{onPress}}>
-            <Icon name="chevron-down" color="white" size={24} />
+          <RectButton style={styles.button}>
+            <Icon
+              name="chevron-down"
+              color="white"
+              size={24}
+              onPress={() => {
+                NavigationService.goBack();
+              }}
+            />
           </RectButton>
           <Text numberOfLines={2} style={styles.title}>
             {playerState.current.title}
           </Text>
-          <RectButton style={styles.button} {...{onPress}}>
+          <RectButton style={styles.button}>
             <Icon name="more-horizontal" color="white" size={24} />
           </RectButton>
         </View>
@@ -104,14 +120,24 @@ const PlayerScreen = ({onPress}) => {
         <TrackSlider></TrackSlider>
         <View style={styles.controls}>
           <Icon name="shuffle" color="rgba(255, 255, 255, 0.5)" size={24} />
-          <AntDesign name="stepbackward" color="white" size={32} />
+          <AntDesign
+            name="stepbackward"
+            color="white"
+            size={32}
+            onPress={playPrev}
+          />
           <AntDesign
             name={isPlaying ? 'pausecircleo' : 'play'}
             color="white"
             size={48}
             onPress={handlePlayPause}
           />
-          <AntDesign name="stepforward" color="white" size={32} />
+          <AntDesign
+            name="stepforward"
+            color="white"
+            size={32}
+            onPress={playNext}
+          />
           <Icon name="repeat" color="rgba(255, 255, 255, 0.5)" size={24} />
         </View>
       </View>

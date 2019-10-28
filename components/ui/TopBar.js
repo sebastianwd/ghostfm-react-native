@@ -5,11 +5,13 @@ import useApi from '../misc/hooks/useApi';
 const TopBar = ({setSearchResults}) => {
   const {searchAutocomplete} = useApi();
 
-  const handleChangeText = async query => {
-    console.log(query);
-    const data = await searchAutocomplete(query);
-    console.log(data);
-    setSearchResults(data);
+  let timeout = 0;
+  const handleChangeText = query => {
+    if (timeout) clearTimeout(timeout);
+    timeout = setTimeout(async () => {
+      const data = await searchAutocomplete(query);
+      setSearchResults(data);
+    }, 300);
   };
 
   return (
