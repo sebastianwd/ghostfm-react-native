@@ -22,17 +22,15 @@ const TrackList = ({trackList}) => {
 
   return (
     <React.Fragment>
-      <SafeAreaView>
-        {trackList && (
-          <FlatList
-            data={playlist}
-            renderItem={({item}) => (
-              <TrackItem item={item} trackList={playlist}></TrackItem>
-            )}
-            keyExtractor={item => item.id}
-          />
-        )}
-      </SafeAreaView>
+      {trackList && (
+        <FlatList
+          data={playlist}
+          renderItem={({item}) => (
+            <TrackItem item={item} trackList={playlist}></TrackItem>
+          )}
+          keyExtractor={item => item.id}
+        />
+      )}
     </React.Fragment>
   );
 };

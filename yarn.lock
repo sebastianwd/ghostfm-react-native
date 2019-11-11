@@ -851,6 +851,11 @@
     simple-plist "^0.2.1"
     uuid "3.0.1"
 
+"@react-native-community/async-storage@^1.6.2":
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/@react-native-community/async-storage/-/async-storage-1.6.2.tgz#a19ca7149c4dfe8216f2330e6b1ebfe2d075ef92"
+  integrity sha512-EJGsbrHubK1mGxPjWB74AaHAd5m9I+Gg2RRPZzMK6org7QOU9WOBnIMFqoeVto3hKOaEPlk8NV74H6G34/2pZQ==
+
 "@react-native-community/cli-platform-android@^3.0.0-alpha.1", "@react-native-community/cli-platform-android@^3.0.0-alpha.7":
   version "3.0.0-alpha.7"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-android/-/cli-platform-android-3.0.0-alpha.7.tgz#03c3671ab72b62a8742aa71b66cb8d594171891f"
@@ -5453,6 +5458,11 @@ react-native-animatable@^1.3.2:
   integrity sha512-2ckIxZQAsvWn25Ho+DK3d1mXIgj7tITkrS4pYDvx96WyOttSvzzFeQnM2od0+FUMzILbdHDsDEqZvnz1DYNQ1w==
   dependencies:
     prop-types "^15.7.2"
+
+react-native-easy-tabs@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-easy-tabs/-/react-native-easy-tabs-1.2.0.tgz#85500508aab225a494041988588c3a5586df5f1a"
+  integrity sha512-9r1JoR4ACoTCNpAM9cg3IRcF4U9u+Urg2/d5OSrUWKfqEQFZ1qkL3rdUweYoqvGcH5KOkdKJTx29KP+ot7Xmzg==
 
 react-native-gesture-handler@^1.4.1:
   version "1.4.1"

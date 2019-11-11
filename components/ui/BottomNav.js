@@ -13,7 +13,7 @@ const BottomNav = ({theme, ...otherProps}) => {
       backgroundColor: colors.background,
     },
     bottomNav: {
-      backgroundColor: colors.background,
+      backgroundColor: '#1a1a1b',
     },
   });
 

@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import {TabView, TabBar, SceneMap} from 'react-native-tab-view';
 import HomeScreen from '../screens/HomeScreen';
-import ArtistScreen from '../screens/ArtistScreen';
+import PlaylistScreen from '../screens/PlaylistScreen';
+import AlbumsScreen from '../screens/AlbumsScreen';
 import {StyleSheet, Dimensions} from 'react-native';
 import {withTheme} from 'react-native-paper';
 
@@ -11,7 +12,10 @@ const TopNav = props => {
 
   const [routes, setRoutes] = useState({
     index: 0,
-    routes: [{key: 'home', title: 'Home'}],
+    routes: [
+      {key: 'playlist', title: 'Playlists'},
+      {key: 'albums', title: 'Albums'},
+    ],
   });
 
   const handleIndexChange = index => {
@@ -25,40 +29,38 @@ const TopNav = props => {
     <TabBar
       {...props}
       scrollEnabled
-      indicatorStyle={styles.indicator}
-      style={styles.tabbar}
+      indicatorStyle={{backgroundColor: colors.accent}}
+      style={{backgroundColor: colors.primary}}
       labelStyle={styles.label}
       tabStyle={styles.tabStyle}
     />
   );
 
-  const styles = StyleSheet.create({
-    tabbar: {
-      backgroundColor: colors.primary,
-    },
-    indicator: {
-      backgroundColor: colors.accent,
-    },
-    label: {
-      fontWeight: '400',
-      textTransform: 'capitalize',
-    },
-    tabStyle: {
-      width: 'auto',
-    },
-  });
-
   return (
     <TabView
       navigationState={routes}
       renderScene={SceneMap({
-        home: HomeScreen,
+        playlist: PlaylistScreen,
+        albums: AlbumsScreen,
       })}
       renderTabBar={renderTabBar}
       onIndexChange={handleIndexChange}
-      initialLayout={{width: Dimensions.get('window').width}}
+      initialLayout={{
+        height: 0,
+        width: Dimensions.get('window').width,
+      }}
+      style={styles.flex1}
     />
   );
 };
+const styles = StyleSheet.create({
+  label: {
+    fontWeight: '400',
+    textTransform: 'capitalize',
+  },
+  tabStyle: {
+    width: 'auto',
+  },
+});
 
 export default withTheme(TopNav);

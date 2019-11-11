@@ -28,7 +28,7 @@ const SearchStack = createStackNavigator(
     initialRouteName: 'Search',
     defaultNavigationOptions: {
       headerStyle: {
-        backgroundColor: '#3f51b5',
+        backgroundColor: '#26263d',
       },
       headerTintColor: '#fff',
       headerTitleStyle: {
@@ -82,7 +82,7 @@ const BottomNavStack = createBottomTabNavigator(
     tabBarComponent: props => <BottomNav {...props} />,
     defaultNavigationOptions: {
       headerStyle: {
-        backgroundColor: '#3f51b5',
+        backgroundColor: '#26263d',
       },
       headerTintColor: '#fff',
       headerTitleStyle: {

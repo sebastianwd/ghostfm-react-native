@@ -17,7 +17,7 @@ const theme = {
   mode: 'exact',
   colors: {
     ...DarkTheme.colors,
-    primary: '#3f51b5',
+    primary: '#26263d',
     accent: 'tomato',
   },
 };

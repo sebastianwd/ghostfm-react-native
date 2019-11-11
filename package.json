@@ -10,11 +10,13 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.6.2",
     "@react-native-community/slider": "^2.0.2",
     "apisauce": "^1.1.1",
     "easy-peasy": "^3.1.0",
     "react": "16.9.0",
     "react-native": "0.61.2",
+    "react-native-easy-tabs": "^1.2.0",
     "react-native-gesture-handler": "^1.4.1",
     "react-native-get-music-files": "https://github.com/cinder92/react-native-get-music-files.git",
     "react-native-linear-gradient": "^2.5.6",

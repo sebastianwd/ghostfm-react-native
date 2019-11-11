@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   },
   input: {
     flexGrow: 1,
-    backgroundColor: '#344294',
+    backgroundColor: '#26263d',
     zIndex: 1,
   },
   results: {
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   },
   resultItem: {
     flexGrow: 1,
-    backgroundColor: '#344294',
+    backgroundColor: '#26263d',
   },
 });
 

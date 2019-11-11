@@ -5,6 +5,7 @@ import {StyleSheet} from 'react-native';
 import TopBar from '../ui/TopBar';
 import NavigationService from '../misc/NavigationService';
 import {withTheme} from 'react-native-paper';
+import SafeAreaView from 'react-native-safe-area-view';
 
 const SearchScreen = props => {
   const [searchResults, setSearchResults] = useState();
@@ -14,22 +15,19 @@ const SearchScreen = props => {
     NavigationService.navigate('Artist', {artistName});
   };
 
-  const styles = StyleSheet.create({
-    container: {
-      backgroundColor: colors.background,
-    },
-    item: {
-      paddingVertical: 0,
-    },
-  });
-
   return (
     <React.Fragment>
       <TopBar setSearchResults={setSearchResults}></TopBar>
-      <ScrollView style={styles.container}>
+      <SafeAreaView
+        style={{
+          backgroundColor: colors.background,
+          flex: 1,
+        }}
+        keyboardShouldPersistTaps={'always'}>
         <List.Section>
           <List.Subheader>Results</List.Subheader>
           <FlatList
+            keyboardShouldPersistTaps={'always'}
             data={searchResults}
             renderItem={({item}) => (
               <TouchableRipple
@@ -45,9 +43,15 @@ const SearchScreen = props => {
             keyExtractor={item => item.strArtist}
           />
         </List.Section>
-      </ScrollView>
+      </SafeAreaView>
     </React.Fragment>
   );
 };
+
+const styles = StyleSheet.create({
+  item: {
+    paddingVertical: 0,
+  },
+});
 
 export default withTheme(SearchScreen);

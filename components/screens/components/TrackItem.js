@@ -18,7 +18,7 @@ const TrackItem = memo(({item, trackList}) => {
         title: trackName,
         artist: artistName,
       };
-
+      console.log('playing url ', mp3Url[0]);
       let playlist = trackList.slice(0);
       let index = playlist.findIndex(track => track.id === item.id);
       playlist.splice(index, 1, trackData);
@@ -47,7 +47,6 @@ const TrackItem = memo(({item, trackList}) => {
           return (
             <React.Fragment>
               <Text style={styles.itemNumber}>{item.id - 10}</Text>
-              <List.Icon {...props} icon="play-circle" />
             </React.Fragment>
           );
         }}
@@ -57,10 +56,11 @@ const TrackItem = memo(({item, trackList}) => {
 });
 const styles = StyleSheet.create({
   item: {
-    paddingVertical: 3,
+    paddingVertical: 6,
   },
   itemNumber: {
     alignSelf: 'center',
+    paddingRight: 8,
   },
   itemContainer: {
     borderWidth: 1,

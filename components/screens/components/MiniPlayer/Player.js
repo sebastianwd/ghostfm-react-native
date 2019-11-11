@@ -37,29 +37,37 @@ const MiniPlayer = memo(({onPress}) => {
   }, []);
 
   useTrackPlayerEvents(events, event => {
+    /* we have to do this whole crap since the player doesn't accept updating url of track */
     if (event.type === TrackPlayerEvents.PLAYBACK_TRACK_CHANGED) {
-      console.log('track changed', event);
       TrackPlayer.getCurrentTrack().then(currentId => {
+        /* if there isn't next track or if track about to play isn't next track (for some reason) */
         if (!event.nextTrack || currentId != event.nextTrack) {
           return;
         }
+        /* else we get the full track object */
         TrackPlayer.getTrack(currentId).then(currentTrack => {
+          /* if next track has fallback url mp3 (which is almost always certain) then stop and bring new url */
           if (currentTrack.url == FALLBACK_MP3) {
-            console.log('stopped');
             TrackPlayer.stop();
             getMP3(`${currentTrack.artist} ${currentTrack.title}`).then(
               mp3Url => {
+                /* we got mp3 url */
                 const trackData = {
                   id: currentId,
                   url: mp3Url[0],
                   title: currentTrack.title,
                   artist: currentTrack.artist,
                 };
+                /* we make a copy of the playlist */
                 let playerState = store.getState().player;
                 let playlist = playerState.queue.slice(0);
+
+                /* find the position of the track */
                 let index = playlist.findIndex(track => track.id === currentId);
+                /* update the track object */
                 playlist.splice(index, 1, trackData);
 
+                /* re-add the playlist */
                 TrackPlayer.reset().then(() => {
                   TrackPlayer.add(playlist).then(() => {
                     updateMetadata(trackData);
@@ -93,6 +101,7 @@ const MiniPlayer = memo(({onPress}) => {
       compactCapabilities: [
         TrackPlayer.CAPABILITY_PLAY,
         TrackPlayer.CAPABILITY_PAUSE,
+        TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
       ],
     });
   };
@@ -132,7 +141,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     maxHeight: 68,
-    backgroundColor: '#272829',
+    backgroundColor: '#1a1a1b',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

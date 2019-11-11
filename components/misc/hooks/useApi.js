@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {create} from 'apisauce';
 
 // https://ghostfm.herokuapp.com/
-const YOUTUBEDL_URL = 'https://youtubedl-api.herokuapp.com/api/';
+const YOUTUBEDL_URL = 'https://youtube-dle.herokuapp.com/api/';
 const BASE_URL = 'https://ghostfm.herokuapp.com/';
 
 const api = create({
@@ -19,7 +19,7 @@ const useApi = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
-  const fetchGoogle = async (endpoint, params) => {
+  const fetchYT = async (endpoint, params) => {
     setIsError(false);
     setIsLoading(true);
     try {
@@ -124,14 +124,14 @@ const useApi = () => {
   }
 
   async function getMP3(query) {
-    let data = await fetchGoogle('audio', {
+    let data = await fetchYT('audio', {
       query: query,
     });
     return data;
   }
 
   async function getImage(query) {
-    let data = await fetchGoogle('image', {
+    let data = await fetchYT('image', {
       query: query,
     });
     return data;
