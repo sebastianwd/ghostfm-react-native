@@ -1,41 +1,45 @@
-import React from 'react';
+import React from "react";
 
-import ArtistScreen from './components/screens/ArtistScreen';
-import {createAppContainer} from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack';
-import NavigationService from './components/misc/NavigationService';
-import HomeScreen from './components/screens/HomeScreen';
-import PlayerScreen from './components/screens/components/Player/PlayerScreen';
-import LibraryScreen from './components/screens/LibraryScreen';
-import SearchScreen from './components/screens/SearchScreen';
-import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {createBottomTabNavigator, BottomTabBar} from 'react-navigation-tabs';
-import BottomNav from './components/ui/BottomNav';
+import ArtistScreen from "./components/screens/ArtistScreen";
+import { createAppContainer } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
+import NavigationService from "./components/misc/NavigationService";
+import HomeScreen from "./components/screens/HomeScreen";
+import PlayerScreen from "./components/screens/components/Player/PlayerScreen";
+import LibraryScreen from "./components/screens/LibraryScreen";
+import SearchScreen from "./components/screens/SearchScreen";
+import AlbumTracksScreen from "./components/screens/AlbumTracksScreen";
+import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import { createBottomTabNavigator, BottomTabBar } from "react-navigation-tabs";
+import BottomNav from "./components/ui/BottomNav";
 
 const SearchStack = createStackNavigator(
   {
     Search: {
       screen: SearchScreen,
       navigationOptions: {
-        header: null, //this will hide the header
-      },
+        header: null //this will hide the header
+      }
     },
     Artist: {
-      screen: ArtistScreen,
+      screen: ArtistScreen
     },
+    AlbumTracks: {
+      screen: AlbumTracksScreen
+    }
   },
   {
-    initialRouteName: 'Search',
+    initialRouteName: "Search",
     defaultNavigationOptions: {
       headerStyle: {
-        backgroundColor: '#26263d',
+        backgroundColor: "#26263d"
       },
-      headerTintColor: '#fff',
+      headerTintColor: "#fff",
       headerTitleStyle: {
-        fontWeight: 'bold',
-      },
-    },
-  },
+        fontWeight: "bold"
+      }
+    }
+  }
 );
 
 const BottomNavStack = createBottomTabNavigator(
@@ -43,53 +47,53 @@ const BottomNavStack = createBottomTabNavigator(
     Home: {
       screen: HomeScreen,
       navigationOptions: {
-        tabBarIcon: ({focused}) => (
+        tabBarIcon: ({ focused }) => (
           <MaterialIcon
-            name={'home'}
+            name={"home"}
             size={24}
-            color={`${focused ? '#fff' : '#d1d1d1b7'}`}
+            color={`${focused ? "#fff" : "#d1d1d1b7"}`}
           />
-        ),
-      },
+        )
+      }
     },
     Search: {
       screen: SearchStack,
       navigationOptions: {
-        tabBarIcon: ({focused}) => (
+        tabBarIcon: ({ focused }) => (
           <MaterialIcon
-            name={'magnify'}
+            name={"magnify"}
             size={24}
-            color={`${focused ? '#fff' : '#d1d1d1b7'}`}
+            color={`${focused ? "#fff" : "#d1d1d1b7"}`}
           />
-        ),
-      },
+        )
+      }
     },
     Library: {
       screen: LibraryScreen,
       navigationOptions: {
-        tabBarIcon: ({focused}) => (
+        tabBarIcon: ({ focused }) => (
           <MaterialIcon
-            name={'library-music'}
+            name={"library-music"}
             size={24}
-            color={`${focused ? '#fff' : '#d1d1d1b7'}`}
+            color={`${focused ? "#fff" : "#d1d1d1b7"}`}
           />
-        ),
-      },
-    },
+        )
+      }
+    }
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: "Home",
     tabBarComponent: props => <BottomNav {...props} />,
     defaultNavigationOptions: {
       headerStyle: {
-        backgroundColor: '#26263d',
+        backgroundColor: "#26263d"
       },
-      headerTintColor: '#fff',
+      headerTintColor: "#fff",
       headerTitleStyle: {
-        fontWeight: 'bold',
-      },
-    },
-  },
+        fontWeight: "bold"
+      }
+    }
+  }
 );
 
 const MainStack = createStackNavigator(
@@ -97,19 +101,19 @@ const MainStack = createStackNavigator(
     Main: {
       screen: BottomNavStack,
       navigationOptions: {
-        header: null, //this will hide the header
-      },
+        header: null //this will hide the header
+      }
     },
     Player: {
       screen: PlayerScreen,
       navigationOptions: {
-        header: null, //this will hide the header
-      },
-    },
+        header: null //this will hide the header
+      }
+    }
   },
   {
-    initialRouteName: 'Main',
-  },
+    initialRouteName: "Main"
+  }
 );
 const AppContainer = createAppContainer(MainStack);
 

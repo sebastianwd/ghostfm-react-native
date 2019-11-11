@@ -1,23 +1,24 @@
-import React, {useState, useEffect} from 'react';
-import {Text, ActivityIndicator} from 'react-native-paper';
-import useApi from '../../misc/hooks/useApi';
+import React, { useState, useEffect } from "react";
+import { Text, ActivityIndicator } from "react-native-paper";
+import useApi from "../../misc/hooks/useApi";
 import {
   Dimensions,
   View,
   StyleSheet,
   ImageBackground,
-  Image,
-} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import LinearGradient from 'react-native-linear-gradient';
-import {FALLBACK_ALBUM_COVER} from '../../misc/Utils';
+  Image
+} from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import LinearGradient from "react-native-linear-gradient";
+import { FALLBACK_ALBUM_COVER } from "../../misc/Utils";
+import NavigationService from "../../misc/NavigationService";
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get("window");
 
 export const AlbumList = props => {
-  const {isLoading, getAlbumsByArtistName} = useApi();
+  const { isLoading, getAlbumsByArtistName } = useApi();
   const [albums, setAlbums] = useState();
-  const {artistName} = props;
+  const { artistName } = props;
 
   useEffect(() => {
     getAlbumsByArtistName(artistName).then(results => {
@@ -25,22 +26,30 @@ export const AlbumList = props => {
     });
   }, [artistName]);
 
+  const handlePress = item => {
+    console.log("aaa");
+    NavigationService.navigate("AlbumTracks", { artistName, album: item });
+  };
+
   return (
     <>
-      {isLoading && <ActivityIndicator size="small" color="#00ff00" />}
+      {isLoading && <ActivityIndicator size='small' color='#00ff00' />}
       <View style={styles.container}>
         {albums &&
           albums.map((item, index) => {
             return (
-              <TouchableOpacity style={styles.surface} key={index}>
+              <TouchableOpacity
+                style={styles.surface}
+                key={index}
+                onPress={() => handlePress(item)}>
                 <View style={styles.imgContainer}>
                   <ImageBackground
-                    source={{uri: item.strAlbumThumb || FALLBACK_ALBUM_COVER}}
+                    source={{ uri: item.strAlbumThumb || FALLBACK_ALBUM_COVER }}
                     style={{
-                      width: '100%',
-                      height: '100%',
+                      width: "100%",
+                      height: "100%"
                     }}
-                    resizeMode={'center'}></ImageBackground>
+                    resizeMode={"contain"}></ImageBackground>
                 </View>
                 <View>
                   <Text numberOfLines={2} style={styles.title}>
@@ -57,27 +66,27 @@ export const AlbumList = props => {
 
 const styles = StyleSheet.create({
   imgContainer: {
-    width: '100%',
-    height: 200,
+    width: "100%",
+    height: 180
   },
   surface: {
     padding: 6,
-    height: 250,
+    height: 230,
     width: width / 2,
-    alignItems: 'center',
-    justifyContent: 'center',
-    elevation: 4,
+    alignItems: "center",
+    justifyContent: "center",
+    elevation: 4
   },
   container: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexDirection: "row",
+    flexWrap: "wrap"
   },
   title: {
-    height: 'auto',
-    textAlign: 'center',
-    backgroundColor: '#111111e1',
+    height: 50,
+    textAlign: "center",
+    backgroundColor: "#111111e1",
     paddingHorizontal: 5,
-    paddingVertical: 6,
-    borderRadius: 6,
-  },
+    paddingVertical: 4,
+    borderRadius: 6
+  }
 });
