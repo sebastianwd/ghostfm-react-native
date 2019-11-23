@@ -1,24 +1,25 @@
-import React, {memo} from 'react';
-import {List, TouchableRipple, Text} from 'react-native-paper';
-import {StyleSheet, View} from 'react-native';
-import useMusicPlayer from '../../misc/hooks/useMusicPlayer';
-import useApi from '../../misc/hooks/useApi';
-import TrackPlayer from 'react-native-track-player';
+import React, { memo } from "react";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { List, TouchableRipple, Text } from "react-native-paper";
+import { StyleSheet, View } from "react-native";
+import useMusicPlayer from "../../misc/hooks/useMusicPlayer";
+import useApi from "../../misc/hooks/useApi";
+import TrackPlayer from "react-native-track-player";
 
-const TrackItem = memo(({item, trackList}) => {
-  const {playTrack, updateMetadata, setQueue} = useMusicPlayer();
-  const {getMP3} = useApi();
+const TrackItem = memo(({ item, trackList, openSheet = null }) => {
+  const { playTrack, updateMetadata, setQueue } = useMusicPlayer();
+  const { getMP3 } = useApi();
 
   const handlePress = (artistName, trackName) => {
-    console.log('searching ', `${artistName} ${trackName}`);
+    console.log("searching ", `${artistName} ${trackName}`);
     getMP3(`${artistName} ${trackName}`).then(mp3Url => {
       const trackData = {
         id: item.id,
         url: mp3Url[0],
         title: trackName,
-        artist: artistName,
+        artist: artistName
       };
-      console.log('playing url ', mp3Url[0]);
+      console.log("playing url ", mp3Url[0]);
       let playlist = trackList.slice(0);
       let index = playlist.findIndex(track => track.id === item.id);
       playlist.splice(index, 1, trackData);
@@ -51,20 +52,24 @@ const TrackItem = memo(({item, trackList}) => {
           );
         }}
       />
+      <TouchableOpacity onPress={() => openSheet && openSheet(item)}>
+        <List.Icon icon='dots-vertical' />
+      </TouchableOpacity>
     </View>
   );
 });
 const styles = StyleSheet.create({
   item: {
-    paddingVertical: 6,
+    width: "85%"
   },
   itemNumber: {
-    alignSelf: 'center',
-    paddingRight: 8,
+    alignSelf: "center",
+    paddingRight: 8
   },
   itemContainer: {
     borderWidth: 1,
-  },
+    flexDirection: "row"
+  }
 });
 
 export default TrackItem;

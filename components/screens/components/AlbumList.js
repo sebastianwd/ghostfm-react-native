@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Text, ActivityIndicator } from "react-native-paper";
+import { TouchableOpacity } from "react-native";
+
 import useApi from "../../misc/hooks/useApi";
 import {
   Dimensions,
@@ -8,7 +10,6 @@ import {
   ImageBackground,
   Image
 } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import LinearGradient from "react-native-linear-gradient";
 import { FALLBACK_ALBUM_COVER } from "../../misc/Utils";
 import NavigationService from "../../misc/NavigationService";

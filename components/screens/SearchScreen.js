@@ -1,18 +1,17 @@
-import React, {useState} from 'react';
-import {Text, List, TouchableRipple} from 'react-native-paper';
-import {ScrollView, FlatList} from 'react-native-gesture-handler';
-import {StyleSheet} from 'react-native';
-import TopBar from '../ui/TopBar';
-import NavigationService from '../misc/NavigationService';
-import {withTheme} from 'react-native-paper';
-import SafeAreaView from 'react-native-safe-area-view';
+import React, { useState } from "react";
+import { Text, List, TouchableRipple } from "react-native-paper";
+import { StyleSheet, FlatList } from "react-native";
+import TopBar from "../ui/TopBar";
+import NavigationService from "../misc/NavigationService";
+import { withTheme } from "react-native-paper";
+import SafeAreaView from "react-native-safe-area-view";
 
 const SearchScreen = props => {
   const [searchResults, setSearchResults] = useState();
-  const {colors} = props.theme;
+  const { colors } = props.theme;
 
   const handlePress = artistName => {
-    NavigationService.navigate('Artist', {artistName});
+    NavigationService.navigate("Artist", { artistName });
   };
 
   return (
@@ -21,22 +20,22 @@ const SearchScreen = props => {
       <SafeAreaView
         style={{
           backgroundColor: colors.background,
-          flex: 1,
+          flex: 1
         }}
-        keyboardShouldPersistTaps={'always'}>
+        keyboardShouldPersistTaps={"always"}>
         <List.Section>
           <List.Subheader>Results</List.Subheader>
           <FlatList
-            keyboardShouldPersistTaps={'always'}
+            keyboardShouldPersistTaps={"always"}
             data={searchResults}
-            renderItem={({item}) => (
+            renderItem={({ item }) => (
               <TouchableRipple
                 onPress={() => handlePress(item.strArtist)}
-                rippleColor="rgba(20, 20, 40, 0.8)">
+                rippleColor='rgba(20, 20, 40, 0.8)'>
                 <List.Item
                   style={styles.item}
                   title={item.strArtist}
-                  left={() => <List.Icon icon="artist" />}
+                  left={() => <List.Icon icon='artist' />}
                 />
               </TouchableRipple>
             )}
@@ -50,8 +49,8 @@ const SearchScreen = props => {
 
 const styles = StyleSheet.create({
   item: {
-    paddingVertical: 0,
-  },
+    paddingVertical: 0
+  }
 });
 
 export default withTheme(SearchScreen);

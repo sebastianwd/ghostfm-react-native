@@ -1,27 +1,24 @@
-import React, {useEffect, useState} from 'react';
-import useApi from '../../misc/hooks/useApi';
-import {Text, Surface} from 'react-native-paper';
+import React, { useEffect, useState } from "react";
+import useApi from "../../misc/hooks/useApi";
+import { Text, Surface } from "react-native-paper";
 import {
   Dimensions,
   View,
   StyleSheet,
   ImageBackground,
-  Image,
-} from 'react-native';
-import {
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-} from 'react-native-gesture-handler';
-import LinearGradient from 'react-native-linear-gradient';
-import NavigationService from '../../misc/NavigationService';
+  Image
+} from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import LinearGradient from "react-native-linear-gradient";
+import NavigationService from "../../misc/NavigationService";
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get("window");
 
 export const SimilarArtists = props => {
-  const {artistName} = props;
+  const { artistName } = props;
   const [similarArtist, setSimilarArtist] = useState();
 
-  const {getSimilarByArtistName} = useApi();
+  const { getSimilarByArtistName } = useApi();
 
   useEffect(() => {
     getSimilarByArtistName(artistName).then(results => {
@@ -30,7 +27,7 @@ export const SimilarArtists = props => {
   }, [artistName]);
 
   const handlePress = artistName => {
-    NavigationService.navigate('Artist', {artistName});
+    NavigationService.navigate("Artist", { artistName });
   };
 
   return (
@@ -45,15 +42,15 @@ export const SimilarArtists = props => {
                 onPress={() => handlePress(item.strArtist)}>
                 <View style={styles.imgContainer}>
                   <ImageBackground
-                    source={{uri: item.strArtistThumb}}
+                    source={{ uri: item.strArtistThumb }}
                     style={{
-                      width: '100%',
-                      height: '100%',
+                      width: "100%",
+                      height: "100%"
                     }}
-                    resizeMode={'cover'}></ImageBackground>
+                    resizeMode={"cover"}></ImageBackground>
                 </View>
                 <LinearGradient
-                  colors={['#11111157', '#111111bb']}
+                  colors={["#11111157", "#111111bb"]}
                   style={StyleSheet.absoluteFill}
                 />
                 <Text style={styles.title}>{item.strArtist}</Text>
@@ -68,28 +65,28 @@ export const SimilarArtists = props => {
 
 const styles = StyleSheet.create({
   imgContainer: {
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%"
   },
   surface: {
     padding: 6,
     height: 90,
     width: width / 2,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     elevation: 4,
-    position: 'relative',
+    position: "relative"
   },
   container: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexDirection: "row",
+    flexWrap: "wrap"
   },
   title: {
-    textAlign: 'center',
-    position: 'absolute',
-    backgroundColor: '#111111e1',
+    textAlign: "center",
+    position: "absolute",
+    backgroundColor: "#111111e1",
     paddingHorizontal: 5,
     paddingVertical: 6,
-    borderRadius: 6,
-  },
+    borderRadius: 6
+  }
 });

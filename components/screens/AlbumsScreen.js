@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
-import {Text} from 'react-native-paper';
-import {ScrollView} from 'react-native-gesture-handler';
+import React, { useState } from "react";
+import { Text } from "react-native-paper";
+import { ScrollView } from "react-native";
 
 const AlbumsScreen = () => {
   return (

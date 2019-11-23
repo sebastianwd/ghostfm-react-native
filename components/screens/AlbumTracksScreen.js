@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { ScrollView, FlatList } from "react-native-gesture-handler";
+import { ScrollView, FlatList } from "react-native";
 import { View, StyleSheet } from "react-native";
 import {
   withTheme,
