@@ -7,7 +7,8 @@ import {
   Title,
   Paragraph,
   Button,
-  Avatar
+  Avatar,
+  Subheading
 } from "react-native-paper";
 import useApi from "../misc/hooks/useApi";
 import TrackList from "../screens/components/TrackList";
@@ -70,6 +71,7 @@ const ArtistScreen = props => {
                 <AlbumList artistName={artistName}></AlbumList>
               </Tab>
             </TabView>
+            <Title style={{ padding: 8 }}>Similar artists</Title>
             <SimilarArtists artistName={artistName}></SimilarArtists>
           </React.Fragment>
         )}

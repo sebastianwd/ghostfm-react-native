@@ -6,19 +6,19 @@ import useApi from "../../misc/hooks/useApi";
 import RNFetchBlob from "rn-fetch-blob";
 // TODO: delete RNBackgroundDownloader
 
+let dirs = RNFetchBlob.fs.dirs;
+
 export const ContextMenu = ({ item }) => {
   const { getMP3 } = useApi();
-  let dirs = RNFetchBlob.fs.dirs;
   const downloadTrack = () => {
     getMP3(`${item.artist} ${item.title}`).then(mp3Url => {
-      console.log(mp3Url[0]);
       RNFetchBlob.config({
         addAndroidDownloads: {
           title: item.title,
           useDownloadManager: true, // <-- this is the only thing required
           notification: true,
           // the url does not contains a file extension, by default the mime type will be text/plain
-          path: dirs.DCIMDir + "/" + item.title,
+          path: dirs.DCIMDir + "/" + item.title + ".mp3",
           mime: "audio/mpeg",
           description: "Downloading...."
         }

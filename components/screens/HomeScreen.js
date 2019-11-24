@@ -25,26 +25,29 @@ const { width, height } = Dimensions.get("window");
 const LocalTrackItem = props => {
   const { item } = props;
   return (
-    <View style={{ flexDirection: "row" }}>
-      <List.Item
-        title={`${item.title || ""}`}
-        description={`${item.author || ""}`}
-        style={{ width: "85%" }}
-        left={props => (
-          <FastImage
-            {...props}
-            style={{ width: 48, height: 48, borderRadius: 24 }}
-            source={{
-              uri: item.cover,
-              priority: FastImage.priority.normal
-            }}
-            resizeMode={FastImage.resizeMode.contain}
-          />
-        )}></List.Item>
-      <TouchableOpacity>
-        <List.Icon icon='dots-vertical' />
-      </TouchableOpacity>
-    </View>
+    <>
+      <View style={{ flexDirection: "row" }}>
+        <List.Item
+          title={`${item.title || ""}`}
+          description={`${item.author || ""}`}
+          style={{ width: "85%" }}
+          left={props => (
+            <FastImage
+              {...props}
+              style={{ width: 48, height: 48, borderRadius: 24 }}
+              source={{
+                uri: item.cover,
+                priority: FastImage.priority.normal
+              }}
+              resizeMode={FastImage.resizeMode.contain}
+            />
+          )}></List.Item>
+
+        <TouchableOpacity>
+          <List.Icon icon='dots-vertical' />
+        </TouchableOpacity>
+      </View>
+    </>
   );
 };
 
@@ -132,14 +135,12 @@ const HomeScreen = memo(props => {
         <FlatList
           data={tracks}
           renderItem={LocalTrackItem}
-          onRefresh={onRefresh}
-          refreshing={refreshing}
           keyExtractor={item => String(item.id)}
           removeClippedSubviews={true}
-          initialNumToRender={100}
-          maxToRenderPerBatch={250}
+          initialNumToRender={50}
+          maxToRenderPerBatch={100}
           updateCellsBatchingPeriod={5}
-          windowSize={100}
+          windowSize={40}
           getItemLayout={(data, index) => ({
             length: 70,
             offset: 70 * index,
