@@ -1,34 +1,55 @@
-import {useState} from 'react';
-import {create} from 'apisauce';
+import { useState } from "react";
+import { create } from "apisauce";
 
 // https://ghostfm.herokuapp.com/
-const YOUTUBEDL_URL = 'https://youtube-dle.herokuapp.com/api/';
-const BASE_URL = 'https://ghostfm.herokuapp.com/';
+const YOUTUBEDL_URL = "https://youtube-dle.herokuapp.com/api/";
+const BASE_URL = "https://ghostfm.herokuapp.com/";
+const WATSON_URL = "https://watson-ghostfm.herokuapp.com/conversation/";
 
 const api = create({
   baseURL: BASE_URL,
-  headers: {Accept: 'application/json'},
+  headers: { Accept: "application/json" }
 });
 
 const ytapi = create({
   baseURL: YOUTUBEDL_URL,
-  headers: {Accept: 'application/json'},
+  headers: { Accept: "application/json" }
+});
+
+const watsonApi = create({
+  baseURL: WATSON_URL,
+  headers: { Accept: "application/json" }
 });
 
 const useApi = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
+  const postWatson = async (data = {}) => {
+    setIsError(false);
+    setIsLoading(true);
+    try {
+      console.log("useApi", "post: " + WATSON_URL);
+      const result = await watsonApi.post("", data);
+      setIsLoading(false);
+      return result.data;
+    } catch (error) {
+      console.log(error);
+      setIsError(true);
+    }
+    setIsLoading(false);
+  };
+
   const fetchYT = async (endpoint, params) => {
     setIsError(false);
     setIsLoading(true);
     try {
-      console.log('useApi', 'fetching: ' + YOUTUBEDL_URL + endpoint);
+      console.log("useApi", "fetching: " + YOUTUBEDL_URL + endpoint);
       const result = await ytapi.get(endpoint, params);
       setIsLoading(false);
       return result.data;
     } catch (error) {
-      console.error('useApi', error);
+      console.error("useApi", error);
       setIsError(true);
     }
     setIsLoading(false);
@@ -38,13 +59,13 @@ const useApi = () => {
     setIsError(false);
     setIsLoading(true);
     try {
-      console.log('useApi', 'fetching: ' + BASE_URL + endpoint);
+      console.log("useApi", "fetching: " + BASE_URL + endpoint);
 
       const result = await api.get(endpoint, params);
       setIsLoading(false);
       return result.data;
     } catch (error) {
-      console.error('useApi', error);
+      console.error("useApi", error);
       setIsError(true);
     }
     setIsLoading(false);
@@ -54,7 +75,7 @@ const useApi = () => {
     setIsError(false);
     setIsLoading(true);
     try {
-      console.log('useApi', 'post: ' + BASE_URL + endpoint);
+      console.log("useApi", "post: " + BASE_URL + endpoint);
       const result = await api.post(endpoint, data);
       setIsLoading(false);
       return result.data;
@@ -65,86 +86,89 @@ const useApi = () => {
   };
 
   async function getArtistByName(name) {
-    let data = await fetchData('artist', {
-      name: name,
+    let data = await fetchData("artist", {
+      name: name
     });
 
     return data;
   }
   async function getTopTracksByArtistName(name) {
-    let data = await fetchData('artist/toptracks', {
-      name: name,
+    let data = await fetchData("artist/toptracks", {
+      name: name
     });
 
     return data;
   }
   async function getVideoId(trackName) {
-    let data = await fetchData('youtubeid', {
-      query: trackName,
+    let data = await fetchData("youtubeid", {
+      query: trackName
     });
 
     return data;
   }
 
   async function getLyrics(artistName, trackName) {
-    let data = await fetchData('track/lyrics', {
+    let data = await fetchData("track/lyrics", {
       artist: artistName,
-      track: trackName,
+      track: trackName
     });
     return data;
   }
 
   async function searchAutocomplete(query) {
-    let data = await fetchData('search', {
-      query: query,
+    let data = await fetchData("search", {
+      query: query
     });
     return data;
   }
 
   async function getSimilarByArtistName(artistName) {
-    let data = await fetchData('artist/similar', {
-      name: artistName,
+    let data = await fetchData("artist/similar", {
+      name: artistName
     });
     return data;
   }
 
   async function getAlbumsByArtistName(artistName) {
-    let data = await fetchData('artist/albums', {
-      name: artistName,
+    let data = await fetchData("artist/albums", {
+      name: artistName
     });
     return data;
   }
 
   async function getAlbumInfo(artistName, albumName) {
-    let data = await fetchData('album', {
+    let data = await fetchData("album", {
       artistName: artistName,
-      albumName: albumName,
+      albumName: albumName
     });
     return data;
   }
 
   async function getMP3(query) {
-    let data = await fetchYT('audio', {
-      query: query,
+    let data = await fetchYT("audio", {
+      query: query
     });
     return data;
   }
 
   async function getImage(query) {
-    let data = await fetchYT('image', {
-      query: query,
+    let data = await fetchYT("image", {
+      query: query
     });
     return data;
   }
   async function getTrackInfo(artistName, trackName) {
-    let data = await fetchData('track', {
+    let data = await fetchData("track", {
       artist: artistName,
       track: trackName,
-      withImage: 'true',
+      withImage: "true"
     });
     return data;
   }
-
+  async function getWatsonMessage(payload = {}) {
+    let response = await postWatson(payload);
+    return response;
+  }
   return {
     getImage,
     isLoading,
@@ -159,6 +183,7 @@ const useApi = () => {
     getAlbumInfo,
     getMP3,
     getTrackInfo,
+    getWatsonMessage
   };
 };
 

@@ -8,10 +8,41 @@ import HomeScreen from "./components/screens/HomeScreen";
 import PlayerScreen from "./components/screens/components/Player/PlayerScreen";
 import LibraryScreen from "./components/screens/LibraryScreen";
 import SearchScreen from "./components/screens/SearchScreen";
+import SettingsScreen from "./components/screens/SettingsScreen";
 import AlbumTracksScreen from "./components/screens/AlbumTracksScreen";
 import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { createBottomTabNavigator, BottomTabBar } from "react-navigation-tabs";
 import BottomNav from "./components/ui/BottomNav";
+import ChatScreen from "./components/screens/ChatScreen";
+
+const HomeStack = createStackNavigator(
+  {
+    Home: {
+      screen: HomeScreen,
+      navigationOptions: {
+        header: null
+      }
+    },
+    Settings: {
+      screen: SettingsScreen
+    },
+    Chat: {
+      screen: ChatScreen
+    }
+  },
+  {
+    initialRouteName: "Home",
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: "#26263d"
+      },
+      headerTintColor: "#fff",
+      headerTitleStyle: {
+        fontWeight: "bold"
+      }
+    }
+  }
+);
 
 const SearchStack = createStackNavigator(
   {
@@ -45,7 +76,7 @@ const SearchStack = createStackNavigator(
 const BottomNavStack = createBottomTabNavigator(
   {
     Home: {
-      screen: HomeScreen,
+      screen: HomeStack,
       navigationOptions: {
         tabBarIcon: ({ focused }) => (
           <MaterialIcon

@@ -23,6 +23,7 @@
     "react-native-fast-image": "^7.0.2",
     "react-native-gesture-handler": "^1.4.1",
     "react-native-get-music-files": "https://github.com/cinder92/react-native-get-music-files.git",
+    "react-native-gifted-chat": "^0.12.0-beta-0",
     "react-native-linear-gradient": "^2.5.6",
     "react-native-paper": "^3.0.0",
     "react-native-permissions": "^2.0.3",
@@ -32,6 +33,7 @@
     "react-native-screens": "^2.0.0-alpha.6",
     "react-native-search-header": "^0.3.5",
     "react-native-snackbar": "^2.0.3",
+    "react-native-svg": "^9.13.3",
     "react-native-swift": "^1.2.2",
     "react-native-tab-view": "^2.10.0",
     "react-native-track-player": "react-native-kit/react-native-track-player#dev",
@@ -40,7 +42,9 @@
     "react-navigation-material-bottom-tabs": "^2.1.3",
     "react-navigation-stack": "^1.10.3",
     "react-navigation-tabs": "^2.5.6",
-    "rn-fetch-blob": "^0.11.2"
+    "recyclerlistview": "^2.0.12",
+    "rn-fetch-blob": "^0.11.2",
+    "watson-developer-cloud": "^4.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",

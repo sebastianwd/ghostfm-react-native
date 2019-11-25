@@ -6,7 +6,7 @@ import {
   Avatar,
   TouchableRipple
 } from "react-native-paper";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
 import { FlatList } from "react-native";
 import { withTheme } from "react-native-paper";
 import MusicFiles from "react-native-get-music-files";
@@ -19,9 +19,11 @@ import { requestPermission } from "../misc/permissions";
 import { View } from "react-native-animatable";
 import QuickScrollList from "react-native-quick-scroll";
 import FastImage from "react-native-fast-image";
+import { LocalTrackList } from "../screens/components/Local/LocalTrackList";
+import { SettingsDialog } from "./components/SettingsDialog";
 
 const { width, height } = Dimensions.get("window");
-
+/*
 const LocalTrackItem = props => {
   const { item } = props;
   return (
@@ -49,7 +51,7 @@ const LocalTrackItem = props => {
       </View>
     </>
   );
-};
+};*/
 
 const HomeScreen = memo(props => {
   const { colors } = props.theme;
@@ -92,8 +94,8 @@ const HomeScreen = memo(props => {
       genre: true,
       title: true,
       minimumSongDuration: 10000, // get songs bigger than 10000 miliseconds duration,
-      batchNumber: 100,
-      delay: 700
+      batchNumber: 80,
+      delay: 600
     })
       .catch(er => alert(JSON.stringify(error)))
       .finally(() => {
@@ -131,7 +133,7 @@ const HomeScreen = memo(props => {
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
-      {tracks.length > 0 && (
+      {/*tracks.length > 0 && (
         <FlatList
           data={tracks}
           renderItem={LocalTrackItem}
@@ -147,7 +149,12 @@ const HomeScreen = memo(props => {
             index
           })}
         />
-      )}
+      )*/}
+
+      <View style={{ justifyContent: "center", alignItems: "flex-end" }}>
+        <SettingsDialog onRefresh={onRefresh}></SettingsDialog>
+      </View>
+      {tracks.length > 0 && <LocalTrackList tracks={tracks}></LocalTrackList>}
     </View>
   );
 });

@@ -1,34 +1,34 @@
-import React, {useEffect, memo} from 'react';
-import TrackPlayer from 'react-native-track-player';
-import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Icon from 'react-native-vector-icons/Feather';
+import React, { useEffect, memo, useState } from "react";
+import TrackPlayer from "react-native-track-player";
+import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import Icon from "react-native-vector-icons/Feather";
 
-import {StyleSheet, View, TouchableWithoutFeedback} from 'react-native';
-import {Text} from 'react-native-paper';
-import {useStore} from 'easy-peasy';
-import useMusicPlayer from '../../../misc/hooks/useMusicPlayer';
+import { StyleSheet, View, TouchableWithoutFeedback } from "react-native";
+import { Text } from "react-native-paper";
+import { useStore } from "easy-peasy";
+import useMusicPlayer from "../../../misc/hooks/useMusicPlayer";
 import {
   useTrackPlayerEvents,
-  TrackPlayerEvents,
-} from 'react-native-track-player/index';
-import {FALLBACK_MP3} from '../../../misc/Utils';
-import useApi from '../../../misc/hooks/useApi';
+  TrackPlayerEvents
+} from "react-native-track-player/index";
+import { FALLBACK_MP3 } from "../../../misc/Utils";
+import useApi from "../../../misc/hooks/useApi";
 
 const events = [
   TrackPlayerEvents.PLAYBACK_TRACK_CHANGED,
-  TrackPlayerEvents.PLAYBACK_QUEUE_ENDED,
+  TrackPlayerEvents.PLAYBACK_QUEUE_ENDED
 ];
 
-const MiniPlayer = memo(({onPress}) => {
+const MiniPlayer = memo(({ onPress }) => {
   //const progress = useProgress(1000);
-
+  const [current, setCurrent] = useState({});
   const {
-    playerState,
     isPlaying,
     handlePlayPause,
     updateMetadata,
+    updateTrackInfo
   } = useMusicPlayer();
-  const {getMP3} = useApi();
+  const { getMP3 } = useApi();
 
   const store = useStore();
 
@@ -46,6 +46,10 @@ const MiniPlayer = memo(({onPress}) => {
         }
         /* else we get the full track object */
         TrackPlayer.getTrack(currentId).then(currentTrack => {
+          setCurrent(currentTrack);
+          if (currentTrack.url !== FALLBACK_MP3) {
+            updateTrackInfo(currentTrack);
+          }
           /* if next track has fallback url mp3 (which is almost always certain) then stop and bring new url */
           if (currentTrack.url == FALLBACK_MP3) {
             TrackPlayer.stop();
@@ -56,7 +60,7 @@ const MiniPlayer = memo(({onPress}) => {
                   id: currentId,
                   url: mp3Url[0],
                   title: currentTrack.title,
-                  artist: currentTrack.artist,
+                  artist: currentTrack.artist
                 };
                 /* we make a copy of the playlist */
                 let playerState = store.getState().player;
@@ -76,7 +80,7 @@ const MiniPlayer = memo(({onPress}) => {
                     });
                   });
                 });
-              },
+              }
             );
           }
         });
@@ -96,42 +100,42 @@ const MiniPlayer = memo(({onPress}) => {
         TrackPlayer.CAPABILITY_PAUSE,
         TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
         TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS,
-        TrackPlayer.CAPABILITY_STOP,
+        TrackPlayer.CAPABILITY_STOP
       ],
       compactCapabilities: [
         TrackPlayer.CAPABILITY_PLAY,
         TrackPlayer.CAPABILITY_PAUSE,
-        TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
-      ],
+        TrackPlayer.CAPABILITY_SKIP_TO_NEXT
+      ]
     });
   };
   return (
     <TouchableWithoutFeedback>
       <View style={styles.container}>
-        <MaterialIcon name={'heart'} size={24} color={'#fff'} />
+        <MaterialIcon name={"heart"} size={24} color={"#fff"} />
         <View
           style={{
-            flexDirection: 'column',
+            flexDirection: "column",
             flex: 1,
-            height: '100%',
-            alignItems: 'center',
-            justifyContent: 'center',
+            height: "100%",
+            alignItems: "center",
+            justifyContent: "center"
           }}>
           <Text numberOfLines={1} style={styles.trackTitle}>
-            {playerState.current.title}
+            {current.title}
           </Text>
           <Text numberOfLines={1} style={styles.artistName}>
-            {playerState.current.artist}
+            {current.artist}
           </Text>
         </View>
         <MaterialIcon
-          style={{marginRight: '5%'}}
-          name={isPlaying ? 'pause' : 'play'}
+          style={{ marginRight: "5%" }}
+          name={isPlaying ? "pause" : "play"}
           size={32}
-          color={'#fff'}
+          color={"#fff"}
           onPress={handlePlayPause}
         />
-        <Icon name="chevron-up" color="white" size={24} onPress={onPress} />
+        <Icon name='chevron-up' color='white' size={24} onPress={onPress} />
       </View>
     </TouchableWithoutFeedback>
   );
@@ -141,14 +145,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     maxHeight: 68,
-    backgroundColor: '#1a1a1b',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 16,
+    backgroundColor: "#1a1a1b",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 16
   },
-  trackTitle: {maxWidth: '80%'},
-  artistName: {fontSize: 12, marginTop: 1},
+  trackTitle: { maxWidth: "80%" },
+  artistName: { fontSize: 12, marginTop: 1 }
 });
 
 export default MiniPlayer;
