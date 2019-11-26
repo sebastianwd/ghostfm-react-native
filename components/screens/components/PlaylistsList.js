@@ -7,7 +7,7 @@ import { StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { ScrollView } from "react-native";
 
-export const PlaylistsList = memo(({ reload = false }) => {
+export const PlaylistsList = memo(({ reload = false, onPress }) => {
   const [state, setPlaylists] = useState([]);
   const { store } = useStorage();
 
@@ -31,7 +31,10 @@ export const PlaylistsList = memo(({ reload = false }) => {
         {state.length > 0 &&
           state.map((item, index) => {
             return (
-              <View key={item.id} style={styles.playlistItem}>
+              <View
+                key={item.id}
+                style={styles.playlistItem}
+                onPress={() => onPress(item)}>
                 <Icon
                   name='playlist-music-outline'
                   color='white'
