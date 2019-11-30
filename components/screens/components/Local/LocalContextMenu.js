@@ -4,6 +4,7 @@ import { StyleSheet, View, Alert } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import useApi from "../../../misc/hooks/useApi";
 import RNFetchBlob from "rn-fetch-blob";
+import NavigationService from "../../../misc/NavigationService";
 
 export const LocalContextMenu = ({ item }) => {
   const { getLyrics } = useApi();
@@ -21,14 +22,18 @@ export const LocalContextMenu = ({ item }) => {
     });
   };
 
+  const addToPlaylist = () => {
+    NavigationService.navigate("Playlist", { mode: "ADD", track: item });
+  };
+
   return (
     <>
       <View style={styles.sheetContainer}>
         <Text style={styles.title}>{`${item.artist} - ${item.title}`}</Text>
-        <View style={styles.optionContainer}>
+        <TouchableRipple style={styles.optionContainer} onPress={addToPlaylist}>
           <Icon name='playlist-plus' color='white' size={24} />
           <Text style={styles.option}> {"Add to playlist"}</Text>
-        </View>
+        </TouchableRipple>
         <TouchableRipple style={styles.optionContainer} onPress={showLyrics}>
           <>
             <Icon name='download' color='white' size={24} />

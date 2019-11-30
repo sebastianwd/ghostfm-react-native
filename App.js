@@ -14,6 +14,7 @@ import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { createBottomTabNavigator, BottomTabBar } from "react-navigation-tabs";
 import BottomNav from "./components/ui/BottomNav";
 import ChatScreen from "./components/screens/ChatScreen";
+import PlaylistScreen from "./components/screens/PlaylistScreen";
 
 const HomeStack = createStackNavigator(
   {
@@ -28,6 +29,9 @@ const HomeStack = createStackNavigator(
     },
     Chat: {
       screen: ChatScreen
+    },
+    Playlist: {
+      screen: PlaylistScreen
     }
   },
   {
