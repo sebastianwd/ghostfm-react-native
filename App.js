@@ -15,6 +15,7 @@ import { createBottomTabNavigator, BottomTabBar } from "react-navigation-tabs";
 import BottomNav from "./components/ui/BottomNav";
 import ChatScreen from "./components/screens/ChatScreen";
 import PlaylistScreen from "./components/screens/PlaylistScreen";
+import PlaylistTracksScreen from "./components/screens/PlaylistTracksScreen";
 
 const HomeStack = createStackNavigator(
   {
@@ -77,6 +78,32 @@ const SearchStack = createStackNavigator(
   }
 );
 
+const LibraryStack = createStackNavigator(
+  {
+    Library: {
+      screen: LibraryScreen,
+      navigationOptions: {
+        header: null
+      }
+    },
+    PlaylistTracks: {
+      screen: PlaylistTracksScreen
+    }
+  },
+  {
+    initialRouteName: "Library",
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: "#26263d"
+      },
+      headerTintColor: "#fff",
+      headerTitleStyle: {
+        fontWeight: "bold"
+      }
+    }
+  }
+);
+
 const BottomNavStack = createBottomTabNavigator(
   {
     Home: {
@@ -104,7 +131,7 @@ const BottomNavStack = createBottomTabNavigator(
       }
     },
     Library: {
-      screen: LibraryScreen,
+      screen: LibraryStack,
       navigationOptions: {
         tabBarIcon: ({ focused }) => (
           <MaterialIcon

@@ -6,6 +6,7 @@ import { View } from "react-native";
 import { StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { ScrollView } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 export const PlaylistsList = memo(({ reload = false, onPress }) => {
   const [state, setPlaylists] = useState([]);
@@ -31,7 +32,7 @@ export const PlaylistsList = memo(({ reload = false, onPress }) => {
         {state.length > 0 &&
           state.map((item, index) => {
             return (
-              <View
+              <TouchableOpacity
                 key={item.id}
                 style={styles.playlistItem}
                 onPress={() => onPress(item)}>
@@ -47,7 +48,7 @@ export const PlaylistsList = memo(({ reload = false, onPress }) => {
                     {item.tracks.length} tracks
                   </Text>
                 </View>
-              </View>
+              </TouchableOpacity>
             );
           })}
       </ScrollView>

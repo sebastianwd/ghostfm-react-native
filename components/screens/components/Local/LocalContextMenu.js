@@ -5,8 +5,13 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import useApi from "../../../misc/hooks/useApi";
 import RNFetchBlob from "rn-fetch-blob";
 import NavigationService from "../../../misc/NavigationService";
+import { usePlaylist } from "../../../misc/hooks/usePlaylist";
+import { getRandomInt } from "../../../misc/Utils";
 
-export const LocalContextMenu = ({ item }) => {
+export const LocalContextMenu = props => {
+  const { item, onClose, playlistId, reload } = props;
+  const { removeFromPlaylist } = usePlaylist();
+
   const { getLyrics } = useApi();
   const showLyrics = () => {
     getLyrics(item.artist, item.title).then(response => {
@@ -19,26 +24,43 @@ export const LocalContextMenu = ({ item }) => {
           { cancelable: true }
         );
       }
+      onClose();
     });
   };
 
   const addToPlaylist = () => {
     NavigationService.navigate("Playlist", { mode: "ADD", track: item });
+    onClose();
   };
 
+  const removeTrack = async () => {
+    await removeFromPlaylist(playlistId, item.id);
+    reload(getRandomInt());
+    onClose();
+  };
   return (
     <>
       <View style={styles.sheetContainer}>
         <Text style={styles.title}>{`${item.artist} - ${item.title}`}</Text>
-        <TouchableRipple style={styles.optionContainer} onPress={addToPlaylist}>
-          <Icon name='playlist-plus' color='white' size={24} />
-          <Text style={styles.option}> {"Add to playlist"}</Text>
+        {playlistId && (
+          <TouchableRipple onPress={removeTrack}>
+            <View style={styles.optionContainer}>
+              <Icon name='playlist-remove' color='white' size={24} />
+              <Text style={styles.option}> {"Remove from playlist"}</Text>
+            </View>
+          </TouchableRipple>
+        )}
+        <TouchableRipple onPress={addToPlaylist}>
+          <View style={styles.optionContainer}>
+            <Icon name='playlist-plus' color='white' size={24} />
+            <Text style={styles.option}> {"Add to playlist"}</Text>
+          </View>
         </TouchableRipple>
-        <TouchableRipple style={styles.optionContainer} onPress={showLyrics}>
-          <>
-            <Icon name='download' color='white' size={24} />
+        <TouchableRipple onPress={showLyrics}>
+          <View style={styles.optionContainer}>
+            <Icon name='playlist-music-outline' color='white' size={24} />
             <Text style={styles.option}> Lyrics</Text>
-          </>
+          </View>
         </TouchableRipple>
       </View>
     </>

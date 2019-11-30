@@ -6896,6 +6896,11 @@ react-native-maps@~0.25.0:
   resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-0.25.0.tgz#81bc51eb50e33811a9e1c345cc48869413ead67d"
   integrity sha512-PFJuW1pt+HnnnN0m0OGk29RSvICFVkK/DScX6cUk0SuCSN2DAHx0y6y57lZyYXcYqU4J4usNpfxgp/ccjASDiw==
 
+react-native-palette@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-palette/-/react-native-palette-1.0.0.tgz#4712c39a08934500b10ad9965fdb3f436553cc31"
+  integrity sha512-7ensY6KkaT6QJ3wB1B+3Ep2M8F8rKpWsoRTpqLfPXJhhdBbbt2tlTtkDOhZgMfRg+/vzBjq/9KsYLtQFOERjBg==
+
 react-native-paper@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/react-native-paper/-/react-native-paper-3.0.0.tgz#b7d667dcb38f5e69552db140c398f50ea46ee98e"
@@ -6992,6 +6997,11 @@ react-native-tab-view@^2.10.0, react-native-tab-view@^2.9.0:
   version "2.10.0"
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-2.10.0.tgz#5e249e5650502010013449ffd4e5edc18a95364b"
   integrity sha512-qgexVz5eO4yaFjdkmn/sURXgVvaBo6pZD/q1eoca96SbPVbaH3WzVhF3bRUfeTHwZkXwznFTpS3JURqIFU8vQA==
+
+react-native-text-ticker@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-text-ticker/-/react-native-text-ticker-1.0.0.tgz#5f13d5ce2a6875f98c20d084f98a8d66e845b4b7"
+  integrity sha512-Y3Nr31owNAuDl+tN5Pb6C3vlcms/kuiCuXvz+4G67c76M+0FQj9miAtj6VkOjR27JVW80IynnXvQPAoiMwxtiA==
 
 react-native-track-player@react-native-kit/react-native-track-player#dev:
   version "1.2.0"

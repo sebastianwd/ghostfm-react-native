@@ -1,5 +1,12 @@
-import React, { useState, useRef } from "react";
-import { Text, Portal, Dialog, Button, TextInput } from "react-native-paper";
+import React, { useState, useRef, useEffect } from "react";
+import {
+  Text,
+  Portal,
+  Dialog,
+  Button,
+  TextInput,
+  withTheme
+} from "react-native-paper";
 import { ScrollView } from "react-native";
 import { StyleSheet, Dimensions } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -7,11 +14,16 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import { PlaylistsList } from "./components/PlaylistsList";
 import { useStorage } from "../misc/hooks/useStorage";
 import { getRandomInt } from "../misc/Utils";
+import NavigationService from "../misc/NavigationService";
+import { usePlaylist } from "../misc/hooks/usePlaylist";
+import { withNavigationFocus } from "react-navigation";
 
-const PlaylistScreen = ({ navigation = null }) => {
+const PlaylistScreen = ({ navigation = null, isFocused }) => {
   const [dialogVisible, setDialogVisible] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [reloadPlaylist, setReloadPlaylist] = useState(false);
+  const { addToPlaylist } = usePlaylist();
+
   const { store } = useStorage();
 
   /* mode of playlist, ADD = will add a song */
@@ -46,37 +58,26 @@ const PlaylistScreen = ({ navigation = null }) => {
 
   const handlePress = async playlistItem => {
     if (mode === "ADD") {
-      let playlists = await store.get("playlists");
-      /*let playlistToInsert = playlists.find(x => x.id === playlistItem.id);
-      playlistToInsert.tracks.push({
-        id: String(getRandomInt()),
-        artist: trackItem.artist,
-        title: trackItem.title,
-        url: trackItem.url,
-        artwork: trackItem.artwork,
-        album: trackItem.album,
-        duration: trackItem.duration
-      });*/
-      var foundIndex = playlists.findIndex(x => x.id == playlistItem.id);
-      playlists[foundIndex].tracks.push({
-        id: String(getRandomInt()),
-        artist: trackItem.artist,
-        title: trackItem.title,
-        url: trackItem.url,
-        artwork: trackItem.artwork,
-        album: trackItem.album,
-        duration: trackItem.duration
-      });
-
-      await store.set("playlists", playlists);
+      let result = await addToPlaylist(playlistItem.id, trackItem);
       NavigationService.goBack();
     } else {
-      /*TODO: navigate to playlist tracks */
+      NavigationService.navigate("PlaylistTracks", {
+        playlistId: playlistItem.id
+      });
     }
   };
+  useEffect(() => {
+    if (isFocused) {
+      setReloadPlaylist(!reloadPlaylist);
+    }
+  }, [isFocused]);
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView
+      contentContainerStyle={{
+        backgroundColor: "#1a1a1b",
+        ...styles.container
+      }}>
       <TouchableOpacity style={styles.playlistButton} onPress={showDialog}>
         <AntDesign name={"plus"} style={styles.plusIcon} size={18}></AntDesign>
         <Text style={styles.playlistButtonText}>Create playlist</Text>
@@ -132,4 +133,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default PlaylistScreen;
+export default withNavigationFocus(PlaylistScreen);

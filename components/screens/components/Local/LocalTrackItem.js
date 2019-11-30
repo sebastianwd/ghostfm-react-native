@@ -6,7 +6,8 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { LocalContextMenu } from "./LocalContextMenu";
 import RBSheet from "react-native-raw-bottom-sheet";
 
-const RenderMenu = ({ isOpen, trackItem, onClose }) => {
+const RenderMenu = props => {
+  const { isOpen, trackItem, onClose, playlistId, reload } = props;
   const btmSheetRef = useRef();
 
   useEffect(() => {
@@ -28,13 +29,17 @@ const RenderMenu = ({ isOpen, trackItem, onClose }) => {
           backgroundColor: "#1a1a1b"
         }
       }}>
-      <LocalContextMenu item={trackItem}></LocalContextMenu>
+      <LocalContextMenu
+        onClose={onClose}
+        item={trackItem}
+        playlistId={playlistId}
+        reload={reload}></LocalContextMenu>
     </RBSheet>
   );
 };
 
 export const LocalTrackItem = props => {
-  const { item, playTrack } = props;
+  const { item, playTrack, playlistId, reload } = props;
   const [isOpen, setIsOpen] = useState(false);
 
   const openSheet = () => {
@@ -45,6 +50,7 @@ export const LocalTrackItem = props => {
     setIsOpen(false);
   };
 
+  console.log(item.artwork);
   return (
     <>
       <View style={{ flexDirection: "row" }}>
@@ -72,7 +78,9 @@ export const LocalTrackItem = props => {
           <RenderMenu
             trackItem={item}
             isOpen={isOpen}
-            onClose={onClose}></RenderMenu>
+            onClose={onClose}
+            playlistId={playlistId}
+            reload={reload}></RenderMenu>
         )}
       </View>
     </>

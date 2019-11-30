@@ -3,15 +3,20 @@ import TrackPlayer from "react-native-track-player";
 import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import Icon from "react-native-vector-icons/Feather";
 
-import { StyleSheet, View, TouchableWithoutFeedback } from "react-native";
+import {
+  StyleSheet,
+  View,
+  TouchableWithoutFeedback,
+  Image
+} from "react-native";
 import { Text } from "react-native-paper";
-import { useStore } from "easy-peasy";
+import { useStore, useStoreState } from "easy-peasy";
 import useMusicPlayer from "../../../misc/hooks/useMusicPlayer";
 import {
   useTrackPlayerEvents,
   TrackPlayerEvents
 } from "react-native-track-player/index";
-import { FALLBACK_MP3 } from "../../../misc/Utils";
+import { FALLBACK_MP3, FALLBACK_ALBUM_COVER } from "../../../misc/Utils";
 import useApi from "../../../misc/hooks/useApi";
 
 const events = [
@@ -29,6 +34,8 @@ const MiniPlayer = memo(({ onPress }) => {
     updateTrackInfo
   } = useMusicPlayer();
   const { getMP3 } = useApi();
+
+  const playerState = useStoreState(state => state.player);
 
   const store = useStore();
 
@@ -112,13 +119,22 @@ const MiniPlayer = memo(({ onPress }) => {
   return (
     <TouchableWithoutFeedback>
       <View style={styles.container}>
-        <MaterialIcon name={"heart"} size={24} color={"#fff"} />
+        <Image
+          height={40}
+          width={40}
+          source={{
+            uri:
+              current.artwork ||
+              playerState.current.artwork ||
+              FALLBACK_ALBUM_COVER
+          }}
+          style={{ marginRight: 10 }}></Image>
+
         <View
           style={{
             flexDirection: "column",
             flex: 1,
             height: "100%",
-            alignItems: "center",
             justifyContent: "center"
           }}>
           <Text numberOfLines={1} style={styles.trackTitle}>

@@ -1,12 +1,13 @@
-import React from "react";
-import { RectButton } from "react-native-gesture-handler";
+import React, { useEffect, useState } from "react";
+import { RectButton, TouchableOpacity } from "react-native-gesture-handler";
 import {
   Dimensions,
   Image,
   SafeAreaView,
   StyleSheet,
   Text,
-  View
+  View,
+  Alert
 } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import AntDesign from "react-native-vector-icons/AntDesign";
@@ -17,6 +18,8 @@ import { useTrackPlayerProgress } from "react-native-track-player";
 import TrackSlider from "./TrackSlider";
 import TrackPlayer from "react-native-track-player";
 import NavigationService from "../../../misc/NavigationService";
+import useApi from "../../../misc/hooks/useApi";
+import { useStorage } from "../../../misc/hooks/useStorage";
 
 const fallbackArtwork = "https://i.imgur.com/dWF1FAo.png";
 
@@ -38,22 +41,27 @@ const styles = StyleSheet.create({
   },
   title: {
     color: "white",
+    fontSize: 12,
     padding: 16,
-    maxWidth: "80%"
+    maxWidth: "80%",
+    letterSpacing: 3,
+    textTransform: "uppercase"
   },
   cover: {
     alignSelf: "center",
     marginVertical: 16,
-    width: width - 100,
-    height: width - 100
+    width: width - 70,
+    height: width - 70
   },
   metadata: {
+    width: width - 70,
     flexDirection: "row",
     justifyContent: "space-between",
+    alignSelf: "center",
     alignItems: "center"
   },
   song: {
-    fontSize: 28,
+    fontSize: 26,
     fontWeight: "bold",
     color: "white",
     maxWidth: width - 64
@@ -71,6 +79,11 @@ const styles = StyleSheet.create({
 
 const PlayerScreen = () => {
   const { playerState, isPlaying, handlePlayPause } = useMusicPlayer();
+  const { getLyrics } = useApi();
+
+  const [isRandom, setIsRandom] = useState(false);
+
+  const { store } = useStorage();
 
   const playPrev = () => {
     TrackPlayer.skipToPrevious();
@@ -78,6 +91,36 @@ const PlayerScreen = () => {
 
   const playNext = () => {
     TrackPlayer.skipToNext();
+  };
+
+  useEffect(() => {
+    (async () => {
+      let isRandom = await store.get("isRandom");
+      if (isRandom) {
+        setIsRandom(Boolean(isRandom));
+      }
+    })();
+  }, []);
+
+  const showLyrics = () => {
+    getLyrics(playerState.current.artist, playerState.current.title).then(
+      response => {
+        if (response && !response.error) {
+          Alert.alert(
+            playerState.current.title,
+            response,
+            [{ text: "OK", onPress: () => console.log("OK Pressed") }],
+            { cancelable: true }
+          );
+          4;
+        }
+      }
+    );
+  };
+
+  const toggleRandom = async () => {
+    await store.set("isRandom", String(!isRandom));
+    setIsRandom(!isRandom);
   };
   return (
     <SafeAreaView style={styles.root}>
@@ -97,9 +140,15 @@ const PlayerScreen = () => {
               }}
             />
           </RectButton>
-          <Text numberOfLines={2} style={styles.title}>
-            {playerState.current.title}
-          </Text>
+          <TouchableOpacity
+            style={{
+              alignItems: "center",
+              width: 150
+            }}>
+            <Text numberOfLines={1} style={styles.title} onPress={showLyrics}>
+              Lyrics
+            </Text>
+          </TouchableOpacity>
           <RectButton style={styles.button}>
             <Icon name='more-horizontal' color='white' size={24} />
           </RectButton>
@@ -111,16 +160,22 @@ const PlayerScreen = () => {
 
         <View style={styles.metadata}>
           <View>
-            <Text numberOfLines={2} style={styles.song}>
+            <Text numberOfLines={1} style={styles.song}>
               {playerState.current.title}
             </Text>
-            <Text style={styles.artist}>{playerState.current.artist}</Text>
+            <Text numberOfLines={1} style={styles.artist}>
+              {playerState.current.artist}
+            </Text>
           </View>
-          <AntDesign name='heart' size={24} color='#55b661' />
         </View>
         <TrackSlider></TrackSlider>
         <View style={styles.controls}>
-          <Icon name='shuffle' color='rgba(255, 255, 255, 0.5)' size={24} />
+          <Icon
+            name='shuffle'
+            color={isRandom ? "green" : "rgba(255, 255, 255, 0.5)"}
+            size={24}
+            onPress={toggleRandom}
+          />
           <AntDesign
             name='stepbackward'
             color='white'

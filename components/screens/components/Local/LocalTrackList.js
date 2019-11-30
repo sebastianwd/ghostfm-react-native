@@ -67,6 +67,10 @@ export class LocalTrackList extends React.PureComponent {
 
   _dataFormat(tracks) {
     return tracks.map(item => {
+      /* if item is already formatted, i.e. when loading saved playlist items */
+      if (item.artist) {
+        return item;
+      }
       return {
         id: String(item.id),
         artist: item.author,
@@ -87,7 +91,9 @@ export class LocalTrackList extends React.PureComponent {
         return (
           <LocalTrackItem
             item={data}
-            playTrack={this.playTrack.bind(this)}></LocalTrackItem>
+            playTrack={this.playTrack.bind(this)}
+            playlistId={this.props.playlistId}
+            reload={this.props.reload}></LocalTrackItem>
         );
       default:
         return null;
