@@ -67,7 +67,8 @@ const styles = StyleSheet.create({
     paddingRight: 8
   },
   itemContainer: {
-    borderWidth: 1,
+    borderWidth: 0.2,
+    borderColor: "#1a1a1b",
     flexDirection: "row"
   }
 });

@@ -2,7 +2,7 @@ import { getRandomInt } from "../Utils";
 import { useStorage } from "./useStorage";
 
 export const usePlaylist = () => {
-  const { store } = useStorage();
+  const { storage } = useStorage();
   /**
      * 
      * @param {String} playlistId 
@@ -18,7 +18,7 @@ export const usePlaylist = () => {
      */
   const addToPlaylist = async (playlistId, trackItem) => {
     try {
-      let playlists = await store.get("playlists");
+      let playlists = await storage.get("playlists");
       playlists = JSON.parse(playlists);
       let foundIndex = playlists.findIndex(x => x.id == playlistId);
       playlists[foundIndex].tracks.push({
@@ -30,7 +30,7 @@ export const usePlaylist = () => {
         album: trackItem.album,
         duration: trackItem.duration
       });
-      await store.set("playlists", JSON.stringify(playlists));
+      await storage.set("playlists", JSON.stringify(playlists));
 
       return true;
     } catch (error) {
@@ -45,14 +45,27 @@ export const usePlaylist = () => {
    */
   const removeFromPlaylist = async (playlistId, trackItemId) => {
     try {
-      let playlists = await store.get("playlists");
+      let playlists = await storage.get("playlists");
       playlists = JSON.parse(playlists);
       let playlistIndex = playlists.findIndex(x => x.id == playlistId);
       let trackIndex = playlists[playlistIndex].tracks.findIndex(
         x => x.id == trackItemId
       );
       ~trackIndex && playlists[playlistIndex].tracks.splice(trackIndex, 1);
-      await store.set("playlists", JSON.stringify(playlists));
+      await storage.set("playlists", JSON.stringify(playlists));
+      return true;
+    } catch (error) {
+      return { error };
+    }
+  };
+
+  const deletePlaylist = async playlistId => {
+    try {
+      let playlists = await storage.get("playlists");
+      playlists = JSON.parse(playlists);
+      let playlistIndex = playlists.findIndex(x => x.id == playlistId);
+      playlists.splice(playlistIndex, 1);
+      await storage.set("playlists", JSON.stringify(playlists));
       return true;
     } catch (error) {
       return { error };
@@ -61,6 +74,7 @@ export const usePlaylist = () => {
 
   return {
     addToPlaylist,
-    removeFromPlaylist
+    removeFromPlaylist,
+    deletePlaylist
   };
 };

@@ -78,12 +78,13 @@ const styles = StyleSheet.create({
 });
 
 const PlayerScreen = () => {
-  const { playerState, isPlaying, handlePlayPause } = useMusicPlayer();
+  const {
+    playerState,
+    isPlaying,
+    handlePlayPause,
+    setRandom
+  } = useMusicPlayer();
   const { getLyrics } = useApi();
-
-  const [isRandom, setIsRandom] = useState(false);
-
-  const { store } = useStorage();
 
   const playPrev = () => {
     TrackPlayer.skipToPrevious();
@@ -92,15 +93,6 @@ const PlayerScreen = () => {
   const playNext = () => {
     TrackPlayer.skipToNext();
   };
-
-  useEffect(() => {
-    (async () => {
-      let isRandom = await store.get("isRandom");
-      if (isRandom) {
-        setIsRandom(Boolean(isRandom));
-      }
-    })();
-  }, []);
 
   const showLyrics = () => {
     getLyrics(playerState.current.artist, playerState.current.title).then(
@@ -118,10 +110,6 @@ const PlayerScreen = () => {
     );
   };
 
-  const toggleRandom = async () => {
-    await store.set("isRandom", String(!isRandom));
-    setIsRandom(!isRandom);
-  };
   return (
     <SafeAreaView style={styles.root}>
       <LinearGradient
@@ -170,12 +158,6 @@ const PlayerScreen = () => {
         </View>
         <TrackSlider></TrackSlider>
         <View style={styles.controls}>
-          <Icon
-            name='shuffle'
-            color={isRandom ? "green" : "rgba(255, 255, 255, 0.5)"}
-            size={24}
-            onPress={toggleRandom}
-          />
           <AntDesign
             name='stepbackward'
             color='white'
@@ -194,7 +176,6 @@ const PlayerScreen = () => {
             size={32}
             onPress={playNext}
           />
-          <Icon name='repeat' color='rgba(255, 255, 255, 0.5)' size={24} />
         </View>
       </View>
     </SafeAreaView>

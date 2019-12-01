@@ -24,7 +24,7 @@ const PlaylistScreen = ({ navigation = null, isFocused }) => {
   const [reloadPlaylist, setReloadPlaylist] = useState(false);
   const { addToPlaylist } = usePlaylist();
 
-  const { store } = useStorage();
+  const { storage } = useStorage();
 
   /* mode of playlist, ADD = will add a song */
   const mode = navigation && navigation.getParam("mode", "");
@@ -38,7 +38,7 @@ const PlaylistScreen = ({ navigation = null, isFocused }) => {
   };
 
   const createPlaylist = async () => {
-    let playlists = await store.get("playlists");
+    let playlists = await storage.get("playlists");
     playlists = JSON.parse(playlists);
     let maxId = Math.max(...playlists.map(o => o.id), 1);
     const newPlaylist = {
@@ -48,7 +48,7 @@ const PlaylistScreen = ({ navigation = null, isFocused }) => {
       trackCount: 0
     };
     playlists.push(newPlaylist);
-    await store.set("playlists", JSON.stringify(playlists));
+    await storage.set("playlists", JSON.stringify(playlists));
     setReloadPlaylist(!reloadPlaylist);
     hideDialog();
   };
@@ -62,7 +62,7 @@ const PlaylistScreen = ({ navigation = null, isFocused }) => {
       NavigationService.goBack();
     } else {
       NavigationService.navigate("PlaylistTracks", {
-        playlistId: playlistItem.id
+        playlist: playlistItem
       });
     }
   };

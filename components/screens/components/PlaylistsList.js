@@ -10,12 +10,12 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 export const PlaylistsList = memo(({ reload = false, onPress }) => {
   const [state, setPlaylists] = useState([]);
-  const { store } = useStorage();
+  const { storage } = useStorage();
 
   const getPlaylists = async () => {
-    let playlists = await store.get("playlists");
+    let playlists = await storage.get("playlists");
     if (!playlists) {
-      store.set("playlists", JSON.stringify(defaultPlaylist));
+      storage.set("playlists", JSON.stringify(defaultPlaylist));
       setPlaylists(defaultPlaylist);
     } else {
       setPlaylists(JSON.parse(playlists));

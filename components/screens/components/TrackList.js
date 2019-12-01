@@ -7,10 +7,11 @@ import RBSheet from "react-native-raw-bottom-sheet";
 import { Text, Drawer } from "react-native-paper";
 import { ContextMenu } from "./ContextMenu";
 
-const TrackList = ({ trackList }) => {
+const TrackList = props => {
   /*trackList.forEach((track, i) => {
     track.number = (i + 1).toString();
   });*/
+  const { trackList, setVideoId } = props;
 
   const [currentTrackOptions, setState] = useState();
 
@@ -56,7 +57,9 @@ const TrackList = ({ trackList }) => {
               }
             }}>
             {currentTrackOptions && (
-              <ContextMenu item={currentTrackOptions}> </ContextMenu>
+              <ContextMenu
+                item={currentTrackOptions}
+                setVideoId={setVideoId}></ContextMenu>
             )}
           </RBSheet>
         </>

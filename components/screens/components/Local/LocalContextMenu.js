@@ -1,6 +1,6 @@
 import React from "react";
 import { Drawer, Text, TouchableRipple } from "react-native-paper";
-import { StyleSheet, View, Alert } from "react-native";
+import { StyleSheet, View, Alert, ToastAndroid } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import useApi from "../../../misc/hooks/useApi";
 import RNFetchBlob from "rn-fetch-blob";
@@ -23,6 +23,8 @@ export const LocalContextMenu = props => {
           [{ text: "OK", onPress: () => console.log("OK Pressed") }],
           { cancelable: true }
         );
+      } else {
+        ToastAndroid.show("Lyrics not found", ToastAndroid.SHORT);
       }
       onClose();
     });

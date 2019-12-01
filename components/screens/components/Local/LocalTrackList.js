@@ -55,15 +55,19 @@ export class LocalTrackList extends React.PureComponent {
     };
   }
 
+  trackList() {
+    return this._dataFormat(this.props.tracks);
+  }
+  /*
   playTrack(track) {
     TrackPlayer.reset().then(() => {
-      TrackPlayer.add(this._dataFormat(this.props.tracks)).then(() => {
+      TrackPlayer.add(this.trackList()).then(() => {
         TrackPlayer.skip(track.id).then(() => {
           TrackPlayer.play();
         });
       });
     });
-  }
+  }*/
 
   _dataFormat(tracks) {
     return tracks.map(item => {
@@ -90,8 +94,9 @@ export class LocalTrackList extends React.PureComponent {
       case ViewTypes.FULL:
         return (
           <LocalTrackItem
+            trackList={this.trackList.bind(this)}
             item={data}
-            playTrack={this.playTrack.bind(this)}
+            /* playTrack={this.playTrack.bind(this)}*/
             playlistId={this.props.playlistId}
             reload={this.props.reload}></LocalTrackItem>
         );

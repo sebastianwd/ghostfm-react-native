@@ -18,6 +18,7 @@ import {
 } from "react-native-track-player/index";
 import { FALLBACK_MP3, FALLBACK_ALBUM_COVER } from "../../../misc/Utils";
 import useApi from "../../../misc/hooks/useApi";
+import { useStorage } from "../../../misc/hooks/useStorage";
 
 const events = [
   TrackPlayerEvents.PLAYBACK_TRACK_CHANGED,
@@ -116,20 +117,25 @@ const MiniPlayer = memo(({ onPress }) => {
       ]
     });
   };
+
+  let coverImage = FALLBACK_ALBUM_COVER;
+  if (current.artwork && current.artwork !== FALLBACK_ALBUM_COVER) {
+    coverImage = current.artwork;
+  }
+  if (
+    playerState.current.artwork &&
+    playerState.current.artwork !== FALLBACK_ALBUM_COVER
+  ) {
+    coverImage = playerState.current.artwork;
+  }
   return (
     <TouchableWithoutFeedback>
       <View style={styles.container}>
         <Image
-          height={40}
-          width={40}
+          style={{ width: 48, height: 48, marginRight: 10 }}
           source={{
-            uri:
-              current.artwork ||
-              playerState.current.artwork ||
-              FALLBACK_ALBUM_COVER
-          }}
-          style={{ marginRight: 10 }}></Image>
-
+            uri: coverImage
+          }}></Image>
         <View
           style={{
             flexDirection: "column",
@@ -138,10 +144,10 @@ const MiniPlayer = memo(({ onPress }) => {
             justifyContent: "center"
           }}>
           <Text numberOfLines={1} style={styles.trackTitle}>
-            {current.title}
+            {current.title || ""}
           </Text>
           <Text numberOfLines={1} style={styles.artistName}>
-            {current.artist}
+            {current.artist || ""}
           </Text>
         </View>
         <MaterialIcon
@@ -151,6 +157,7 @@ const MiniPlayer = memo(({ onPress }) => {
           color={"#fff"}
           onPress={handlePlayPause}
         />
+
         <Icon name='chevron-up' color='white' size={24} onPress={onPress} />
       </View>
     </TouchableWithoutFeedback>

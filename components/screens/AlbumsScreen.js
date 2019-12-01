@@ -5,19 +5,48 @@ import { RNAndroidAudioStore } from "react-native-get-music-files";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import SafeAreaView from "react-native-safe-area-view";
 import { View, Image } from "react-native";
+import NavigationService from "../misc/NavigationService";
+import { useStorage } from "../misc/hooks/useStorage";
 const { width, height } = Dimensions.get("window");
 
 const AlbumsScreen = () => {
   const [albums, setAlbums] = useState();
+  const { storage } = useStorage();
 
-  useEffect(() => {
+  const getAlbums = () => {
     RNAndroidAudioStore.getAlbums()
       .then(albums => {
-        console.log("albums");
         setAlbums(albums);
+        storage.set("albums", JSON.stringify(albums));
       })
-      .catch(er => alert(JSON.stringify(error)));
+      .catch(error => alert(JSON.stringify(error)));
+  };
+  const checkExistingAlbums = async () => {
+    let localAlbums = await storage.get("albums");
+    if (localAlbums) {
+      setAlbums(JSON.parse(localAlbums));
+      return;
+    }
+
+    getAlbums();
+  };
+
+  useEffect(() => {
+    checkExistingAlbums();
   }, []);
+
+  const showTracks = item => {
+    RNAndroidAudioStore.getSongs({ album: item.album })
+      .then(songs => {
+        songs.forEach(o => {
+          o.artwork = "file://" + item.cover;
+        });
+        NavigationService.navigate("LocalTrackList", {
+          tracks: songs
+        });
+      })
+      .catch(error => alert(JSON.stringify(error)));
+  };
 
   return (
     <SafeAreaView>
@@ -29,7 +58,9 @@ const AlbumsScreen = () => {
           keyExtractor={album => album.id}
           renderItem={({ item }) => {
             return (
-              <TouchableOpacity style={styles.container}>
+              <TouchableOpacity
+                style={styles.container}
+                onPress={() => showTracks(item)}>
                 <View style={styles.imgContainer}>
                   <Image
                     source={{ uri: "file://" + item.cover }}

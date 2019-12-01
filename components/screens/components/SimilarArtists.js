@@ -11,6 +11,7 @@ import {
 import { TouchableOpacity } from "react-native-gesture-handler";
 import LinearGradient from "react-native-linear-gradient";
 import NavigationService from "../../misc/NavigationService";
+import { FALLBACK_ALBUM_COVER } from "../../misc/Utils";
 
 const { width, height } = Dimensions.get("window");
 
@@ -42,7 +43,9 @@ export const SimilarArtists = props => {
                 onPress={() => handlePress(item.strArtist)}>
                 <View style={styles.imgContainer}>
                   <ImageBackground
-                    source={{ uri: item.strArtistThumb }}
+                    source={{
+                      uri: item.strArtistThumb || FALLBACK_ALBUM_COVER
+                    }}
                     style={{
                       width: "100%",
                       height: "100%"

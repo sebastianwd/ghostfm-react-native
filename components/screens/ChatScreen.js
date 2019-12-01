@@ -31,12 +31,22 @@ const ChatScreen = () => {
       text: msg,
       context: {}
     };
-    let res = await getWatsonMessage(payload);
+    let res = {};
+    try {
+      res = await getWatsonMessage(payload);
+    } catch {
+      return replyModel(
+        "You need internet connection to use this feature",
+        "Watson"
+      );
+    }
     let text = "";
+    let image = "";
     let quickReplies = [];
 
     res.output.generic.forEach(item => {
       text = item.text || text;
+      image = item.source || image;
       quickReplies =
         item.options &&
         item.options.map(o => {
@@ -48,10 +58,12 @@ const ChatScreen = () => {
     });
 
     if (quickReplies && quickReplies.length > 0) {
-      return quickReplyModel(text, quickReplies);
+      return quickReplyModel(text, quickReplies, image);
     }
+    console.log(image);
+
     const sender = res.sender === "watson" ? "Watson" : "User";
-    return replyModel(text, sender);
+    return replyModel(text, sender, image);
   };
 
   useEffect(() => {
@@ -68,6 +80,7 @@ const ChatScreen = () => {
     }));
 
     sendToWatson(messages[0].text).then(reply => {
+      console.log(reply);
       setState(previousState => ({
         messages: GiftedChat.append(previousState.messages, [reply])
       }));

@@ -58,19 +58,19 @@ const HomeScreen = memo(props => {
   const [tracks, setSongs] = useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
 
-  const { store } = useStorage();
+  const { storage } = useStorage();
 
   const onRefresh = () => {
     console.log("refres");
     setRefreshing(true);
-    store.remove("songs").then(() => {
+    storage.remove("songs").then(() => {
       DeviceEventEmitter.removeAllListeners();
       DeviceEventEmitter.addListener("onBatchReceived", params => {
         setSongs(tracks => [...tracks, ...params.batch]);
       });
       DeviceEventEmitter.addListener("onLastBatchReceived", params => {
         setRefreshing(false);
-        store.set("songs", JSON.stringify(tracks));
+        storage.set("songs", JSON.stringify(tracks));
       });
       setSongs([]);
       getAll();
@@ -104,7 +104,7 @@ const HomeScreen = memo(props => {
   };
 
   const checkExistingSongs = async () => {
-    let localSongs = await store.get("songs");
+    let localSongs = await storage.get("songs");
     if (localSongs) {
       setSongs(JSON.parse(localSongs));
       return;
@@ -128,7 +128,7 @@ const HomeScreen = memo(props => {
 
   DeviceEventEmitter.addListener("onLastBatchReceived", params => {
     setRefreshing(false);
-    store.set("songs", JSON.stringify(tracks));
+    storage.set("songs", JSON.stringify(tracks));
   });
 
   return (

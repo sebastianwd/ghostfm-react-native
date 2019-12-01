@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from "@react-native-community/async-storage";
 
 export const useStorage = () => {
   const get = async key => {
@@ -7,7 +7,7 @@ export const useStorage = () => {
       return item;
     } catch (e) {
       console.log(e);
-      alert('No se pudo acceder al storage');
+      alert("No se pudo acceder al storage");
     }
   };
 
@@ -16,7 +16,7 @@ export const useStorage = () => {
       await AsyncStorage.setItem(key, value);
     } catch (e) {
       console.log(e);
-      alert('No se pudo acceder al storage');
+      alert("No se pudo acceder al storage");
     }
   };
 
@@ -25,15 +25,15 @@ export const useStorage = () => {
       await AsyncStorage.removeItem(key);
     } catch (e) {
       console.log(e);
-      alert('No se pudo acceder al storage');
+      alert("No se pudo acceder al storage");
     }
   };
 
-  const store = {
+  const storage = {
     get,
     set,
-    remove,
+    remove
   };
 
-  return {store};
+  return { storage };
 };

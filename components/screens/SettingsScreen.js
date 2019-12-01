@@ -1,16 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, StyleSheet } from "react-native";
-import {
-  withTheme,
-  Text,
-  Card,
-  Title,
-  Headline,
-  Button,
-  Avatar,
-  Surface,
-  List
-} from "react-native-paper";
+import { View, StyleSheet, Linking } from "react-native";
+import { withTheme, Text, Surface, List } from "react-native-paper";
 import SafeAreaView from "react-native-safe-area-view";
 import TrackItem from "./components/TrackItem";
 import NavigationService from "../misc/NavigationService";
@@ -23,12 +13,23 @@ const SettingsScreen = props => {
     NavigationService.navigate("Chat");
   };
 
+  const sendMail = () => {
+    Linking.openURL(
+      "mailto:i201711625@cibertec.edu.pe.com?subject=GhostFM&body=Hola,"
+    );
+  };
+
+  const goToAbout = () => {
+    NavigationService.navigate("About");
+  };
+
   return (
     <SafeAreaView style={{ backgroundColor: colors.background, flex: 1 }}>
       <List.Item
         title='Report a bug'
+        onPress={sendMail}
         style={styles.item}
-        description='Open an issue on our Github repo'
+        description='Mail the developers'
         left={props => <List.Icon {...props} icon='bug' />}
       />
       <List.Item
@@ -41,6 +42,7 @@ const SettingsScreen = props => {
       <List.Item
         title='About'
         style={styles.item}
+        onPress={goToAbout}
         description='About this app'
         left={props => <List.Icon {...props} icon='information-outline' />}
       />

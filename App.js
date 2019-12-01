@@ -16,6 +16,8 @@ import BottomNav from "./components/ui/BottomNav";
 import ChatScreen from "./components/screens/ChatScreen";
 import PlaylistScreen from "./components/screens/PlaylistScreen";
 import PlaylistTracksScreen from "./components/screens/PlaylistTracksScreen";
+import LocalTrackListScreen from "./components/screens/LocalTrackListScreen";
+import AboutScreen from "./components/screens/AboutScreen";
 
 const HomeStack = createStackNavigator(
   {
@@ -27,6 +29,9 @@ const HomeStack = createStackNavigator(
     },
     Settings: {
       screen: SettingsScreen
+    },
+    About: {
+      screen: AboutScreen
     },
     Chat: {
       screen: ChatScreen
@@ -88,6 +93,9 @@ const LibraryStack = createStackNavigator(
     },
     PlaylistTracks: {
       screen: PlaylistTracksScreen
+    },
+    LocalTrackList: {
+      screen: LocalTrackListScreen
     }
   },
   {

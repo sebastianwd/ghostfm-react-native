@@ -5,6 +5,8 @@ import FastImage from "react-native-fast-image";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { LocalContextMenu } from "./LocalContextMenu";
 import RBSheet from "react-native-raw-bottom-sheet";
+import TrackPlayer from "react-native-track-player";
+import useMusicPlayer from "../../../misc/hooks/useMusicPlayer";
 
 const RenderMenu = props => {
   const { isOpen, trackItem, onClose, playlistId, reload } = props;
@@ -39,7 +41,7 @@ const RenderMenu = props => {
 };
 
 export const LocalTrackItem = props => {
-  const { item, playTrack, playlistId, reload } = props;
+  const { item, playlistId, reload, trackList } = props;
   const [isOpen, setIsOpen] = useState(false);
 
   const openSheet = () => {
@@ -50,12 +52,22 @@ export const LocalTrackItem = props => {
     setIsOpen(false);
   };
 
-  console.log(item.artwork);
+  const playTrack = () => {
+    TrackPlayer.reset().then(() => {
+      let queue = trackList();
+      TrackPlayer.add(queue).then(() => {
+        TrackPlayer.skip(item.id).then(() => {
+          TrackPlayer.play();
+        });
+      });
+    });
+  };
+
   return (
     <>
       <View style={{ flexDirection: "row" }}>
         <List.Item
-          onPress={() => playTrack(item)}
+          onPress={playTrack}
           title={`${item.title || ""}`}
           description={`${item.artist || ""}`}
           style={{ width: "85%" }}

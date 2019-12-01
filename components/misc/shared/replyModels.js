@@ -1,4 +1,4 @@
-export const quickReplyModel = (text = "", quickreplies = []) => {
+export const quickReplyModel = (text = "", quickreplies = [], image = "") => {
   return {
     _id: Math.round(Math.random() * 100000),
     text: text,
@@ -8,6 +8,7 @@ export const quickReplyModel = (text = "", quickreplies = []) => {
       keepIt: true,
       values: quickreplies
     },
+    image: image,
     user: {
       _id: 2,
       name: "Watson"
@@ -15,11 +16,12 @@ export const quickReplyModel = (text = "", quickreplies = []) => {
   };
 };
 
-export const replyModel = (text = "", sender = "User") => {
+export const replyModel = (text = "", sender = "User", image = "") => {
   return {
     _id: Math.round(Math.random() * 100000),
     text: text,
     createdAt: new Date(),
+    image: image,
     user: {
       _id: sender === "User" ? 1 : 2,
       name: sender

@@ -27,6 +27,7 @@ const useMusicPlayer = () => {
   const updateTrackInfo = useStoreActions(
     actions => actions.player.updateTrackInfo
   );
+
   const playTrack = useStoreActions(actions => actions.player.playTrack);
 
   const handlePlayPause = async () => {
