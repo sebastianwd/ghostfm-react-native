@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Text, Card, Title, Paragraph } from "react-native-paper";
-import { ImageBackground, StyleSheet, Dimensions } from "react-native";
+import {
+  ImageBackground,
+  StyleSheet,
+  Dimensions,
+  FlatList
+} from "react-native";
 import { RNAndroidAudioStore } from "react-native-get-music-files";
-import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import SafeAreaView from "react-native-safe-area-view";
 import { View, Image } from "react-native";
 import NavigationService from "../misc/NavigationService";
@@ -40,7 +45,9 @@ const AlbumsScreen = () => {
       .then(songs => {
         songs.forEach(o => {
           o.artwork = "file://" + item.cover;
+          o.url = o.path;
         });
+        console.log("songs", songs);
         NavigationService.navigate("LocalTrackList", {
           tracks: songs
         });
