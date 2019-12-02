@@ -1,5 +1,6 @@
 import React, { useEffect, useState, memo } from "react";
-import { Text } from "react-native-paper";
+import { Text } from "react-native";
+import { Text as PaperText } from "react-native-paper";
 import { useStorage } from "../../misc/hooks/useStorage";
 import { defaultPlaylist } from "../../misc/Utils";
 import { View } from "react-native";
@@ -43,7 +44,7 @@ export const PlaylistsList = memo(({ reload = false, onPress }) => {
                   style={{ alignSelf: "center", marginHorizontal: 12 }}
                 />
                 <View>
-                  <Text style={styles.title}>{item.name}</Text>
+                  <PaperText style={styles.title}>{item.name}</PaperText>
                   <Text style={styles.subtitle}>
                     {item.tracks.length} tracks
                   </Text>
@@ -63,12 +64,11 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   title: {
-    fontSize: 16,
-    fontWeight: "bold"
+    fontSize: 16
   },
   subtitle: {
     fontSize: 12,
-    fontWeight: "200",
+    fontWeight: "normal",
     color: "#d1d1d1b7"
   }
 });

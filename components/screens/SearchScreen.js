@@ -52,7 +52,10 @@ const SearchScreen = props => {
                 alignItems: "center",
                 justifyContent: "center"
               }}>
-              <Icon name={"magnify"} size={36} color={"#a8a8a8be"}></Icon>
+              <Icon name={"magnify"} size={48} color={"#a8a8a8be"}></Icon>
+              <Text style={{ color: "#a8a8a8be" }}>
+                Type an artist name into the searchbar
+              </Text>
             </View>
           )}
         </List.Section>

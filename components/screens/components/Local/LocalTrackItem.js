@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, memo } from "react";
 import { View } from "react-native";
 import { List } from "react-native-paper";
 import FastImage from "react-native-fast-image";
@@ -40,9 +40,11 @@ const RenderMenu = props => {
   );
 };
 
-export const LocalTrackItem = props => {
+const LocalTrackItemMemo = props => {
   const { item, playlistId, reload, trackList } = props;
   const [isOpen, setIsOpen] = useState(false);
+
+  const { playerState } = useMusicPlayer();
 
   const openSheet = () => {
     setIsOpen(true);
@@ -51,7 +53,6 @@ export const LocalTrackItem = props => {
   const onClose = () => {
     setIsOpen(false);
   };
-
   const playTrack = () => {
     TrackPlayer.reset().then(() => {
       let queue = trackList();
@@ -63,10 +64,16 @@ export const LocalTrackItem = props => {
     });
   };
 
+  let currentTrackStyle = {};
+  if (playerState.current && playerState.current.title == item.title) {
+    currentTrackStyle = { colors: { text: "#49ff8fea" } };
+  }
+
   return (
     <>
       <View style={{ flexDirection: "row" }}>
         <List.Item
+          theme={currentTrackStyle}
           onPress={playTrack}
           title={`${item.title || ""}`}
           description={`${item.artist || ""}`}
@@ -98,3 +105,5 @@ export const LocalTrackItem = props => {
     </>
   );
 };
+
+export const LocalTrackItem = React.memo(LocalTrackItemMemo);

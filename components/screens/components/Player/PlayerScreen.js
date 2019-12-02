@@ -20,6 +20,7 @@ import TrackPlayer from "react-native-track-player";
 import NavigationService from "../../../misc/NavigationService";
 import useApi from "../../../misc/hooks/useApi";
 import { useStorage } from "../../../misc/hooks/useStorage";
+import TextTicker from "react-native-text-ticker";
 
 const fallbackArtwork = "https://i.imgur.com/dWF1FAo.png";
 
@@ -61,13 +62,14 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   song: {
-    fontSize: 26,
-    fontWeight: "bold",
-    color: "white",
-    maxWidth: width - 64
+    fontSize: 22,
+    fontFamily: "CircularStd-Bold",
+    color: "white"
   },
   artist: {
-    color: "white"
+    color: "white",
+    fontSize: 16,
+    fontFamily: "CircularStd-Book"
   },
   controls: {
     flexDirection: "row",
@@ -78,12 +80,7 @@ const styles = StyleSheet.create({
 });
 
 const PlayerScreen = () => {
-  const {
-    playerState,
-    isPlaying,
-    handlePlayPause,
-    setRandom
-  } = useMusicPlayer();
+  const { playerState, isPlaying, handlePlayPause } = useMusicPlayer();
   const { getLyrics } = useApi();
 
   const playPrev = () => {
@@ -147,12 +144,18 @@ const PlayerScreen = () => {
         />
 
         <View style={styles.metadata}>
-          <View>
-            <Text numberOfLines={1} style={styles.song}>
-              {playerState.current.title}
-            </Text>
+          <View style={{ flex: 1 }}>
+            <TextTicker
+              style={styles.song}
+              scrollSpeed={260}
+              loop
+              bounce={false}
+              repeatSpacer={50}
+              marqueeDelay={0}>
+              {playerState.current.title || ""}
+            </TextTicker>
             <Text numberOfLines={1} style={styles.artist}>
-              {playerState.current.artist}
+              {playerState.current.artist || ""}
             </Text>
           </View>
         </View>

@@ -2,6 +2,7 @@ import React, { useEffect, memo, useState } from "react";
 import TrackPlayer from "react-native-track-player";
 import MaterialIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import Icon from "react-native-vector-icons/Feather";
+import TextTicker from "react-native-text-ticker";
 
 import {
   StyleSheet,
@@ -143,9 +144,17 @@ const MiniPlayer = memo(({ onPress }) => {
             height: "100%",
             justifyContent: "center"
           }}>
-          <Text numberOfLines={1} style={styles.trackTitle}>
+          <TextTicker
+            style={styles.trackTitle}
+            scrollSpeed={250}
+            loop
+            bounce={false}
+            repeatSpacer={50}
+            marqueeDelay={0}
+            numberOfLines={1}>
             {current.title || ""}
-          </Text>
+          </TextTicker>
+
           <Text numberOfLines={1} style={styles.artistName}>
             {current.artist || ""}
           </Text>
@@ -174,7 +183,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 16
   },
-  trackTitle: { maxWidth: "80%" },
+  trackTitle: { color: "white", fontFamily: "CircularStd-Bold" },
   artistName: { fontSize: 12, marginTop: 1 }
 });
 

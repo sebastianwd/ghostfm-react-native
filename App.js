@@ -44,7 +44,7 @@ const HomeStack = createStackNavigator(
     initialRouteName: "Home",
     defaultNavigationOptions: {
       headerStyle: {
-        backgroundColor: "#26263d"
+        backgroundColor: "#1d1d1d"
       },
       headerTintColor: "#fff",
       headerTitleStyle: {
@@ -73,7 +73,7 @@ const SearchStack = createStackNavigator(
     initialRouteName: "Search",
     defaultNavigationOptions: {
       headerStyle: {
-        backgroundColor: "#26263d"
+        backgroundColor: "#1d1d1d"
       },
       headerTintColor: "#fff",
       headerTitleStyle: {
@@ -102,7 +102,7 @@ const LibraryStack = createStackNavigator(
     initialRouteName: "Library",
     defaultNavigationOptions: {
       headerStyle: {
-        backgroundColor: "#26263d"
+        backgroundColor: "#1d1d1d"
       },
       headerTintColor: "#fff",
       headerTitleStyle: {
@@ -120,8 +120,8 @@ const BottomNavStack = createBottomTabNavigator(
         tabBarIcon: ({ focused }) => (
           <MaterialIcon
             name={"home"}
-            size={24}
-            color={`${focused ? "#fff" : "#d1d1d1b7"}`}
+            size={focused ? 30 : 24}
+            color={`${focused ? "#49ff8fea" : "#d1d1d1b7"}`}
           />
         )
       }
@@ -132,8 +132,8 @@ const BottomNavStack = createBottomTabNavigator(
         tabBarIcon: ({ focused }) => (
           <MaterialIcon
             name={"magnify"}
-            size={24}
-            color={`${focused ? "#fff" : "#d1d1d1b7"}`}
+            size={focused ? 30 : 24}
+            color={`${focused ? "#49ff8fea" : "#d1d1d1b7"}`}
           />
         )
       }
@@ -144,8 +144,8 @@ const BottomNavStack = createBottomTabNavigator(
         tabBarIcon: ({ focused }) => (
           <MaterialIcon
             name={"library-music"}
-            size={24}
-            color={`${focused ? "#fff" : "#d1d1d1b7"}`}
+            size={focused ? 30 : 24}
+            color={`${focused ? "#49ff8fea" : "#d1d1d1b7"}`}
           />
         )
       }
@@ -154,9 +154,15 @@ const BottomNavStack = createBottomTabNavigator(
   {
     initialRouteName: "Home",
     tabBarComponent: props => <BottomNav {...props} />,
+    tabBarOptions: {
+      activeTintColor: "#49ff8fea",
+      labelStyle: {
+        fontFamily: "CircularStd-Book"
+      }
+    },
     defaultNavigationOptions: {
       headerStyle: {
-        backgroundColor: "#26263d"
+        backgroundColor: "#1d1d1d"
       },
       headerTintColor: "#fff",
       headerTitleStyle: {

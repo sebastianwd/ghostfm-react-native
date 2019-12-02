@@ -93,12 +93,14 @@ export class LocalTrackList extends React.PureComponent {
     switch (type) {
       case ViewTypes.FULL:
         return (
-          <LocalTrackItem
-            trackList={this.trackList.bind(this)}
-            item={data}
-            /* playTrack={this.playTrack.bind(this)}*/
-            playlistId={this.props.playlistId}
-            reload={this.props.reload}></LocalTrackItem>
+          <>
+            <LocalTrackItem
+              trackList={this.trackList.bind(this)}
+              item={data}
+              /* playTrack={this.playTrack.bind(this)}*/
+              playlistId={this.props.playlistId}
+              reload={this.props.reload}></LocalTrackItem>
+          </>
         );
       default:
         return null;
