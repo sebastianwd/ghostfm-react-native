@@ -20,7 +20,7 @@
     "react-native": "0.61.2",
     "react-native-background-downloader": "^2.3.2",
     "react-native-easy-tabs": "^1.2.0",
-    "react-native-fast-image": "^7.0.2",
+    "react-native-fast-image": "^8.3.0",
     "react-native-gesture-handler": "^1.4.1",
     "react-native-get-music-files": "https://github.com/cinder92/react-native-get-music-files.git",
     "react-native-gifted-chat": "^0.12.0-beta-0",
